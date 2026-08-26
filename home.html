@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fazbear Entertainment | Premium</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <figure>
+            <!-- Logo da empresa -->
+            <img src="imagens/logo_branca.png" alt="Logo empresarial" width="100">
+        </figure>
+        <h1>Fazbear Entertainment</h1>
+        <nav>
+            <a href="home.html">Home</a>
+            <a href="sobre.html">Sobre a empresa</a>
+            <a href="novidade.html">O Mega Pizzaplex</a>
+            <a href="reserva.html">Reservar festa</a>
+            <a href="vagas.html">Contratação</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- 1. HERO COM CARROSSEL DE FUNDO ANIMADO E BOTÃO PULSANTE -->
+        <section id="hero-premium">
+            <div class="hero-conteudo">
+                <h2>Bem-vindo à<br>Fazbear Entertainment</h2>
+            </div>
+        </section>
+
+        <!-- 2. CARDS FLUTUANTES DOS PACOTES DE FESTA -->
+        <section id="pacotes-vip">
+            <h2 class="titulo-secao">Escolha sua Experiência Superstar</h2>
+            <div class="grid-cards">
+                
+                <article class="card card-bronze">
+                    <div class="card-img" style="background-image: url('imagens/Ticket_bronze.png');"></div>
+                    <h3>Pacote Bronze</h3>
+                    <p>Acesso ao Salão Principal, 1 hora de boliche no Bonnie Bowl e 50 Faz-Tokens por criança. Ideal para até 10 pessoas.</p>
+                    <a href="reserva.html">Selecionar Pacote</a>
+                </article>
+
+                <article class="card card-ouro">
+                    <div class="card-img" style="background-image: url('imagens/Ticket_ouro.png');"></div>
+                    <h3>Pacote Glamrock Gold</h3>
+                    <p>Acesso livre ao Fazer Blast e Creche (Daycare), além de visita rápida do Glamrock Freddy na mesa do bolo. Para até 25 pessoas.</p>
+                    <a href="reserva.html">Selecionar Pacote</a>
+                </article>
+
+                <article class="card card-diamante">
+                    <div class="card-img" style="background-image: url('imagens/Ticket_diamante.png');"></div>
+                    <h3>Pacote VIP Superstar</h3>
+                    <p>Acesso ilimitado a todas as atrações (incluindo Roxy Raceway), camarote VIP exclusivo e presença de toda a banda Glamrock. Para até 50 pessoas.</p>
+                    <a href="reserva.html">Selecionar Pacote</a>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- 3. ATRAÇÕES EM ZIGUE-ZAGUE -->
+        <section id="atracoes-zigzag">
+            <h2 class="titulo-secao">Um Mundo de Atrações</h2>
+
+            <!-- Bloco 1: ROXY RACEWAY -->
+            <div class="linha-zigzag">
+                <div class="imagem-zigzag" style="background-image: url('imagens/Roxy_Raceway.jpg');"></div>
+                <div class="texto-zigzag">
+                    <h3>Roxy Raceway</h3>
+                    <p>Sinta a adrenalina na nossa pista profissional de Go-Kart. Projetada com curvas de alta velocidade e neon pulsante, é a experiência definitiva para quem busca competição e diversão.</p>
+                </div>
+            </div>
+
+            <!-- Bloco 2: MONTY'S GATOR GOLF  -->
+            <div class="linha-zigzag reverso">
+                <div class="imagem-zigzag" style="background-image: url('imagens/Monty_Gator_Golf.jpg');"></div>
+                <div class="texto-zigzag">
+                    <h3>Monty's Gator Golf</h3>
+                    <p>Um campo de mini-golfe de 18 buracos imerso em uma selva tropical indoor. Cuidado com os obstáculos aquáticos e venha provar que você tem a mira perfeita.</p>
+                </div>
+            </div>
+
+            <!-- Bloco 3: FAZER BLAST -->
+            <div class="linha-zigzag">
+                <div class="imagem-zigzag" style="background-image: url('imagens/Fazer_blast.png');"></div>
+                <div class="texto-zigzag">
+                    <h3>Fazer Blast</h3>
+                    <p>Equipe-se com blasters de laser de última geração e entre em uma arena espacial cheia de luzes neon e efeitos especiais. Derrote o exército de robôs invasores, defenda a galáxia com sua equipe e dispute o topo do placar de líderes da atração!</p>
+                </div>
+            </div>
+
+            <!-- Bloco 4: SUPERSTAR DAYCARE -->
+            <div class="linha-zigzag reverso">
+                <div class="imagem-zigzag" style="background-image: url('imagens/Superstar_daycare.png');"></div>
+                <div class="texto-zigzag">
+                    <h3>Superstar Daycare</h3>
+                    <p>O espaço definitivo para as crianças menores se divertirem com total segurança. Conta com uma piscina de bolinhas gigante, estruturas de escalada coloridas e o atendimento atencioso dos nossos monitores em um ambiente mágico e supervisionado.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <!-- Topo do Footer (Logo) -->
+        <div class="footer-top logo-container">
+            <!-- Substitua o src pelo link ou caminho da sua imagem do Freddy -->
+            <img src="imagens/logo_branca.png" alt="Logo empresarial" class="footer-icon">
+            <h2 class="footer-logo-text">Fazbear Entertainment</h2>
+        </div>
+
+        <!-- Linha Divisória -->
+        <hr class="footer-divider" />
+
+        <!-- Colunas de Informação -->
+        <div class="footer-grid">
+            
+            <!-- Coluna 1: Localização e Horários (Igual a referência) -->
+            <div class="footer-col">
+                <h3>Nossa Localização</h3>
+                <p>1987 Hurricane, Utah<br>
+                Mega Pizzaplex Center<br>
+                (1-800) FAZ-BEAR</p>
+
+                <h3 class="margin-top">Horários</h3>
+                <p><b>Seg - Qui:</b> 11:00 AM - 21:00 PM<br>
+                <b>Sex:</b> 11:00 AM - 00:00 PM<br>
+                <b>Sáb:</b> 10:00 AM - 00:00 PM<br>
+                <b>Dom:</b> 11:00 AM - 21:00 PM</p>
+            </div>
+
+            <!-- Coluna 2: "Aba" de navegação-->
+            <div class="footer-col">
+                <h3>Acesso Rápido</h3>
+                <ul>
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="sobre.html">Sobre a Empresa</a></li>
+                    <li><a href="atracoes.html">Nossas Atrações</a></li>
+                    <li><a href="reserva.html">Reservar Festa VIP</a></li>
+                    <li><a href="contato.html">Trabalhe Conosco</a></li>
+                </ul>
+            </div>
+
+            <!-- Coluna 3: Informações do Projeto -->
+            <div class="footer-col">
+                <h3>Sobre o Projeto</h3>
+                <ul>
+                    <li><b>Autor:</b> Renato Lissoni de Almeida</li>
+                    <li><b>Disciplina:</b> Sistemas Computacionais</li>
+                    <li><b>Data:</b> 22 de setembro de 2026</li>
+                    <li><b>Contato RH:</b> rl.almeida@unesp.br</li>
+                </ul>
+            </div>
+
+            <!-- Coluna 4: Fontes -->
+            <div class="footer-col">
+                <h3>Fontes e Referências</h3>
+                <ul>
+                    <li><a href="https://store.steampowered.com/app/732690/FIVE_NIGHTS_AT_FREDDYS_HELP_WANTED/" target="_blank">FNAF no Steam</a></li>
+                    <li><a href="https://freddy-fazbears-pizza.fandom.com/wiki/Freddy_Fazbear%27s_Pizza_Wiki" target="_blank">FNAF Wiki</a></li>
+                    <li><a href="https://commons.wikimedia.org/" target="_blank">Wikimedia Commons</a></li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- O aviso legal macabro lá no finalzinho -->
+        <div class="footer-bottom">
+            <p><small>&copy; 2026 Fazbear Entertainment. O desaparecimento de clientes dentro do shopping não é de nossa responsabilidade.</small></p>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>

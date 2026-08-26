@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Contratação | Fazbear Entertainment</title>
+    <link rel="stylesheet" href="styles.css"/>
+</head>
+
+<body>
+    <header>
+        <!-- Imagem da logo da empresa -->
+        <figure>
+            <img src="imagens/logo_branca.png" alt="Logo empresarial" width="100">
+        </figure>
+
+        <h1>Fazbear Entertainment</h1>
+        
+        <nav>
+            <a href="home.html">Home</a>
+            <a href="sobre.html">Sobre a empresa</a>
+            <a href="novidade.html">O Mega Pizzaplex</a>
+            <a href="reserva.html">Reservar festa</a>
+            <a href="vagas.html">Contratação</a>
+        </nav>
+    </header>
+
+    <main>
+        <section id="beneficios">
+            <h2>Trabalhe no Freddy Fazbear's Mega Pizzaplex</h2>
+            <p>Buscamos profissionais dedicados, corajosos e com alta tolerância a ambientes de pouca iluminação! Na Fazbear Entertainment, valorizamos nossa equipe de linha de frente.</p>
+
+            <h3>O que oferecemos aos nossos colaboradores:</h3>
+
+            <ul>
+                <li><b>Desconto Faz-Lunch:</b> 10% de desconto na compra de pizzas de pepperoni durante seu turno.</li>
+                <li><b>Equipamento Oficial:</b> Fornecimento gratuito de um relógio tático <i>Faz-Watch</i>.</li>
+                <li><b>Plano de Carreira:</b> Possibilidade de promoção rápida (devido à alta rotatividade de pessoal).</li>
+                <li><b>Assistência Médica Básica:</b> Cobertura para curativos simples e soro fisiológico no local.</li>
+            </ul>
+
+            <p>
+                <b>Documentação Obrigatória:</b> 
+                <a href="arquivos/termo_sigilo.pdf" download>Baixe aqui o Termo de Isenção de Responsabilidade e Sigilo em PDF</a>
+            </p>
+        </section>
+
+        <hr />
+
+        <section id="formulario-vagas">
+            <h3>Formulário de Candidatura</h3>
+
+            <form action="/painel/candidaturas" method="POST">
+      
+                <!-- Grupo 1: Dados de Contato -->
+                <fieldset>
+                    <legend><b>1. Dados Pessoais e Contato</b></legend>
+            
+                    <p>
+                        <label for="nome">Nome Completo:</label><br />
+                        <input type="text" id="nome" name="nome" placeholder="Digite seu nome completo" required />
+                    </p>
+
+                    <p>
+                        <label for="email">E-mail para Contato:</label><br />
+                        <input type="email" id="email" name="email" placeholder="seuemail@exemplo.com" required />
+                    </p>
+
+                    <p>
+                        <label for="telefone">Telefone:</label><br />
+                        <input type="tel" id="telefone" name="telefone" placeholder="(00) 90000-0000" required />
+                    </p>
+                </fieldset>
+
+                <br />
+
+                <!-- Grupo 2: Opções do Cargo -->
+                <fieldset>
+                    <legend><b>2. Seleção de Vaga e Turno</b></legend>
+
+                    <p>
+                        <label for="cargo">Qual vaga você deseja disputar?</label><br />
+                        <select id="cargo" name="cargo" required>
+                            <option value="" disabled selected>-- Selecione um cargo --</option>
+                            <option value="seguranca">Guarda Noturno Chefe</option>
+                            <option value="creche">Atendente da Creche (Tolerância a escuro exigida)</option>
+                            <option value="tecnico">Técnico em Robótica (Glamrocks e S.T.A.F.F. Bots)</option>
+                            <option value="faxineiro">Faxineiro (Saiba limpar manchas difíceis e sangue)</option>
+                            <option value="cozinheiro">Cozinheiro de Pizzas Automático</option>
+                        </select>
+                    </p>
+
+                    <p>
+                        <label>Turno de Preferência:</label><br />
+                        <input type="radio" id="diurno" name="turno" value="diurno" />
+                        <label for="diurno">Diurno (08:00 às 16:00)</label><br />
+
+                        <input type="radio" id="noturno" name="turno" value="noturno" checked />
+                        <label for="noturno">Noturno / Madrugada (00:00 às 06:00 - Adicional Noturno)</label>
+                    </p>
+
+                    <p>
+                        <label for="experiencia">Descreva sua experiência prévia (e confirme que não é um repórter investigativo):</label><br />
+                        <textarea id="experiencia" name="experiencia" rows="4" cols="40" placeholder="Conte brevemente onde já trabalhou..."></textarea>
+                    </p>
+                </fieldset>
+
+                <br />
+
+                <!-- Grupo 3: Termos e Envio -->
+                <fieldset>
+                    <legend><b>3. Confirmação e Aceite</b></legend>
+
+                    <p>
+                        <input type="checkbox" id="termo" name="termo" required />
+                        <label for="termo">Declaro estar ciente dos riscos de ruídos metálicos noturnos e isento a Fazbear Entertainment de qualquer complicação de saúde física ou mental.</label>
+                    </p>
+
+                    <p>
+                        <button type="submit">Aceitar Riscos e Enviar Candidatura</button>
+                    </p>
+                </fieldset>
+            </form>
+        </section>
+        <hr />
+    </main>
+
+    <footer class="site-footer">
+        <!-- Topo do Footer (Logo) -->
+        <div class="footer-top logo-container">
+            <!-- Substitua o src pelo link ou caminho da sua imagem do Freddy -->
+            <img src="imagens/logo_branca.png" alt="Logo empresarial" class="footer-icon">
+            <h2 class="footer-logo-text">Fazbear Entertainment</h2>
+        </div>
+
+        <!-- Linha Divisória -->
+        <hr class="footer-divider" />
+
+        <!-- Colunas de Informação -->
+        <div class="footer-grid">
+            
+            <!-- Coluna 1: Localização e Horários (Igual a referência) -->
+            <div class="footer-col">
+                <h3>Nossa Localização</h3>
+                <p>1987 Hurricane, Utah<br>
+                Mega Pizzaplex Center<br>
+                (1-800) FAZ-BEAR</p>
+
+                <h3 class="margin-top">Horários</h3>
+                <p><b>Seg - Qui:</b> 11:00 AM - 21:00 PM<br>
+                <b>Sex:</b> 11:00 AM - 00:00 PM<br>
+                <b>Sáb:</b> 10:00 AM - 00:00 PM<br>
+                <b>Dom:</b> 11:00 AM - 21:00 PM</p>
+            </div>
+
+            <!-- Coluna 2: "Aba" de navegação-->
+            <div class="footer-col">
+                <h3>Acesso Rápido</h3>
+                <ul>
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="sobre.html">Sobre a Empresa</a></li>
+                    <li><a href="atracoes.html">Nossas Atrações</a></li>
+                    <li><a href="reserva.html">Reservar Festa VIP</a></li>
+                    <li><a href="contato.html">Trabalhe Conosco</a></li>
+                </ul>
+            </div>
+
+            <!-- Coluna 3: Informações do Projeto -->
+            <div class="footer-col">
+                <h3>Sobre o Projeto</h3>
+                <ul>
+                    <li><b>Autor:</b> Renato Lissoni de Almeida</li>
+                    <li><b>Disciplina:</b> Sistemas Computacionais</li>
+                    <li><b>Data:</b> 22 de setembro de 2026</li>
+                    <li><b>Contato RH:</b> rl.almeida@unesp.br</li>
+                </ul>
+            </div>
+
+            <!-- Coluna 4: Fontes -->
+            <div class="footer-col">
+                <h3>Fontes e Referências</h3>
+                <ul>
+                    <li><a href="https://store.steampowered.com/app/732690/FIVE_NIGHTS_AT_FREDDYS_HELP_WANTED/" target="_blank">FNAF no Steam</a></li>
+                    <li><a href="https://freddy-fazbears-pizza.fandom.com/wiki/Freddy_Fazbear%27s_Pizza_Wiki" target="_blank">FNAF Wiki</a></li>
+                    <li><a href="https://commons.wikimedia.org/" target="_blank">Wikimedia Commons</a></li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- O aviso legal macabro lá no finalzinho -->
+        <div class="footer-bottom">
+            <p><small>&copy; 2026 Fazbear Entertainment. O desaparecimento de clientes dentro do shopping não é de nossa responsabilidade.</small></p>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>

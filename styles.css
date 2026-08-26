@@ -1,0 +1,397 @@
+/* ========================================================
+   1. PALETA DE CORES (Ajuste facilmente aqui)
+======================================================== */
+:root {
+    --fundo-pagina: #1a1a1a;    /* Fundo geral (Cinza asfalto) */
+    --fundo-cards: #222222;     /* Fundo dos blocos e cards */
+    --fundo-header: #111111;    /* Fundo do menu superior */
+    --cor-destaque: #9e1b1b;    /* Vermelho Carmesim */
+    --cor-dourada: #d4af37;     /* Dourado */
+    --cor-texto: #f4f4f4;       /* Texto principal */
+    --cor-texto-mutado: #aaa;  /* Texto secundário */
+}
+
+/* ========================================================
+   2. REGRAS GERAIS E BASE DA PÁGINA
+======================================================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--fundo-pagina);
+    color: var(--cor-texto);
+}
+
+/* ========================================================
+   3. CABEÇALHO (HEADER)
+======================================================== */
+header {
+    display: flex;
+    align-items: center;
+    background-color: var(--fundo-header);
+    padding: 15px 40px;
+    border-bottom: 4px solid var(--cor-destaque);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    transition: transform 0.4s ease-in-out;
+}
+
+header.oculto {
+    transform: translateY(-100%);
+}
+
+header figure {
+    margin: 0;
+}
+
+header h1 {
+    color: var(--cor-dourada);
+    font-size: 22px;
+    margin-left: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+header nav {
+    margin-left: auto;
+    display: flex;
+    gap: 30px;
+}
+
+header nav a {
+    color: var(--cor-texto);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    transition: color 0.3s;
+}
+
+header nav a:hover {
+    color: var(--cor-dourada);
+}
+
+/* ========================================================
+   4. HERO BANNER ESTÁTICO (LIMPO E DIRETO)
+======================================================== */
+#hero-premium {
+    position: relative;
+    height: 75vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    
+    /* TROQUE A URL DA IMAGEM ESTÁTICA AQUI */
+    background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOEEuDqYoLq8G4oGDH-xRr7-RLqEqLpGTGmRNgpygUpg&s=10');
+    background-size: cover;
+    background-position: center;
+}
+
+/* Máscara escura para garantir leitura do texto */
+#hero-premium::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    /* Mudei de 0.65 para 0.1 (apenas 10% escuro, quase transparente) */
+    background: rgba(0, 0, 0, 0.05); 
+}
+
+#hero-premium .hero-conteudo {
+    position: relative;
+    z-index: 10;
+    max-width: 800px;
+    padding: 20px;
+}
+
+#hero-premium h2 {
+    color: var(--cor-dourada);
+    font-size: 3.5rem;
+    text-transform: uppercase;
+    /* Adicionado um contorno preto grosso na letra para ela não sumir na imagem viva */
+    text-shadow: 
+        2px 2px 0 #000, 
+       -2px -2px 0 #000, 
+        2px -2px 0 #000, 
+       -2px 2px 0 #000, 
+        0px 5px 15px rgba(0,0,0,0.9);
+    margin-bottom: 15px;
+}
+
+#hero-premium p {
+    font-size: 1.3rem;
+    line-height: 1.6;
+    margin-bottom: 35px;
+    /* Contorno preto no parágrafo também */
+    text-shadow: 
+        1px 1px 0 #000, 
+       -1px -1px 0 #000, 
+        1px -1px 0 #000, 
+       -1px 1px 0 #000, 
+        0px 3px 8px rgba(0,0,0,0.9);
+}
+
+/* ========================================================
+   5. CARDS DOS PACOTES
+======================================================== */
+.titulo-secao {
+    text-align: center;
+    color: var(--cor-dourada);
+    font-size: 2.5rem;
+    margin: 60px 0 40px;
+    text-transform: uppercase;
+}
+
+.grid-cards {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 0 40px 60px;
+    flex-wrap: wrap;
+}
+
+.card {
+    background-color: var(--fundo-cards);
+    border-radius: 12px;
+    width: 320px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    transition: transform 0.4s, box-shadow 0.4s, border-color 0.4s;
+    text-align: center;
+    border-bottom: 4px solid #333333;
+}
+
+.card:hover {
+    transform: translateY(-12px);
+}
+
+/* =========================================
+   EFEITOS NEON ESPECÍFICOS PARA CADA PACOTE
+========================================= */
+
+/* --- PACOTE BRONZE --- */
+.card-bronze:hover {
+    border-bottom: 4px solid #ff7700; /* Laranja elétrico */
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.7), 
+                0 6px 15px #ff7700;    /* Brilho neon na borda */
+}
+
+/* --- PACOTE OURO --- */
+.card-ouro:hover {
+    border-bottom: 4px solid #ffee00; /* Amarelo limão/ouro neon */
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.7), 
+                0 6px 15px #ffee00;    /* Brilho neon na borda */
+}
+
+/* --- PACOTE DIAMANTE --- */
+.card-diamante:hover {
+    border-bottom: 4px solid #00ffff; /* Ciano choque neon */
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.7), 
+                0 6px 15px #00ffff;    /* Brilho neon na borda */
+}
+
+.card-img {
+    height: 180px;
+    background-size: cover;
+    background-position: center;
+}
+
+.card h3 {
+    color: var(--cor-texto);
+    margin: 20px 0 10px;
+    font-size: 1.5rem;
+}
+
+.card p {
+    padding: 0 20px;
+    color: var(--cor-texto-mutado);
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.card a {
+    display: inline-block;
+    margin-bottom: 25px;
+    color: var(--cor-dourada);
+    text-decoration: none;
+    font-weight: bold;
+    border: 1px solid var(--cor-dourada);
+    padding: 8px 20px;
+    border-radius: 20px;
+    transition: background 0.3s, color 0.3s;
+}
+
+.card a:hover {
+    background-color: var(--cor-dourada);
+    color: #111111;
+}
+
+/* ========================================================
+   6. SEÇÃO ZIGUE-ZAGUE (ATRAÇÕES)
+======================================================== */
+#atracoes-zigzag {
+    display: flex;
+    flex-direction: column; /* Empilha um card em cima do outro */
+    align-items: center;
+    gap: 40px;              /* Espaço entre cada card */
+    max-width: 1100px;
+    margin: 0 auto 60px;
+    padding: 0 20px;
+}
+
+/* O card horizontal (Foto de um lado, Texto do outro) */
+.linha-zigzag {
+    display: flex;
+    flex-direction: row;    /* Força o alinhamento lado a lado dentro do card */
+    width: 100%;
+    background-color: var(--fundo-cards);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+}
+
+/* Inverte a posição apenas nos blocos com a classe 'reverso' */
+.linha-zigzag.reverso {
+    flex-direction: row-reverse;
+}
+
+/* Garante que imagem e texto dividam o card exatamente ao meio */
+.imagem-zigzag {
+    flex: 1;
+    min-height: 350px;
+    background-size: cover;
+    background-position: center;
+}
+
+.texto-zigzag {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.texto-zigzag h3 {
+    color: var(--cor-destaque);
+    font-size: 2.2rem;
+    margin-bottom: 15px;
+}
+
+.texto-zigzag p {
+    color: var(--cor-texto);
+    font-size: 1.1rem;
+    line-height: 1.7;
+    margin-bottom: 20px;
+}
+
+/* ========================================================
+   7. RODAPÉ (FOOTER)
+======================================================== */
+.site-footer {
+    background-color: var(--fundo-header);
+    color: var(--cor-texto);
+    padding: 40px 40px 20px;
+    margin-top: 60px;
+    border-top: 4px solid var(--cor-destaque);
+}
+
+/* Logo no topo do footer */
+.footer-logo {
+    color: var(--cor-dourada);
+    font-size: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Linha divisória fininha */
+.footer-divider {
+    border: none;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.2);
+    margin: 20px 0 40px 0;
+}
+
+/* Grid que cria as 3 colunas */
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+/* Estilo dos títulos de cada coluna */
+.footer-col h3 {
+    color: var(--cor-dourada);
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+/* Espaço extra para o título "Horários" */
+.footer-col .margin-top {
+    margin-top: 25px;
+}
+
+/* Textos padrões */
+.footer-col p {
+    color: var(--cor-texto-mutado);
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+/* Tira as bolinhas da lista e alinha os links */
+.footer-col ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-col ul li {
+    margin-bottom: 12px;
+    color: var(--cor-texto-mutado);
+    font-size: 0.95rem;
+}
+
+/* Estilo dos links das fontes */
+.footer-col ul li a {
+    color: var(--cor-texto-mutado);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-col ul li a:hover {
+    color: var(--cor-dourada);
+}
+
+/* A barra final com o copyright */
+.footer-bottom {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: #777; /* Texto um pouco mais escuro pra não chamar tanta atenção */
+}
+
+.footer-top.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Espaço entre a carinha do Freddy e o texto */
+}
+
+.footer-icon {
+    width: 45px; /* Deixa a imagem menor que a do header */
+    height: auto;
+}
+
+.footer-logo-text {
+    color: var(--cor-dourada);
+    font-size: 1.1rem; /* Texto menor */
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    line-height: 1.3; /* Aproxima as linhas "Fazbear" e "Entertainment" */
+}
