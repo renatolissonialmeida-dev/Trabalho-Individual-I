@@ -1,0 +1,197 @@
+/* ========================================================
+   1. INÍCIO
+======================================================== */
+#inicio {
+    position: relative;
+    height: 75vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+}
+
+.video-fundo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Recorta as sobras e preenche a tela inteira */
+    z-index: 1;
+    filter: brightness(1); /* Escurece 50% para dar leitura perfeita ao texto */
+}
+
+#inicio .inicio-conteudo {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    padding: 20px;
+}
+
+#inicio h2 {
+    color: var(--cor-texto);
+    font-size: 3.5rem;
+    text-transform: uppercase;
+    /*text-shadow: 
+        2px 2px 0 #000, 
+       -2px -2px 0 #000, 
+        2px -2px 0 #000, 
+       -2px 2px 0 #000, 
+        0px 5px 15px rgba(0,0,0,0.9);*/
+    margin-bottom: 15px;
+}
+
+/* ========================================================
+   2. CARDS DOS PACOTES
+======================================================== */
+.titulo-secao {
+    text-align: center;
+    color: var(--cor-dourada);
+    font-size: 2.5rem;
+    margin: 60px 0 40px;
+    text-transform: uppercase;
+}
+
+.grid-cards {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 0 40px 60px;
+    flex-wrap: wrap;
+}
+
+.card {
+    background-color: var(--fundo-cards);
+    border-radius: 12px;
+    width: 320px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    transition: transform 0.4s, box-shadow 0.4s, border-color 0.4s;
+    text-align: center;
+    border-bottom: 4px solid #333333;
+}
+
+.card:hover {
+    transform: translateY(-12px);
+}
+
+/* =========================================
+   EFEITOS NEON ESPECÍFICOS PARA CADA PACOTE
+========================================= */
+
+/* --- PACOTE BRONZE --- */
+.card-bronze:hover {
+    border-bottom: 4px solid #ff7700; /* Laranja elétrico */
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.7), 
+                0 6px 15px #ff7700;    /* Brilho neon na borda */
+}
+
+/* --- PACOTE OURO --- */
+.card-ouro:hover {
+    border-bottom: 4px solid #ffee00; /* Amarelo limão/ouro neon */
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.7), 
+                0 6px 15px #ffee00;    /* Brilho neon na borda */
+}
+
+/* --- PACOTE DIAMANTE --- */
+.card-diamante:hover {
+    border-bottom: 4px solid #00ffff; /* Ciano choque neon */
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.7), 
+                0 6px 15px #00ffff;    /* Brilho neon na borda */
+}
+
+.card-img {
+    height: 180px;
+    background-size: cover;
+    background-position: center;
+}
+
+.card h3 {
+    color: var(--cor-texto);
+    margin: 20px 0 10px;
+    font-size: 1.5rem;
+}
+
+.card p {
+    padding: 0 20px;
+    color: var(--cor-texto-mutado);
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.card a {
+    display: inline-block;
+    margin-bottom: 25px;
+    color: var(--cor-dourada);
+    text-decoration: none;
+    font-weight: bold;
+    border: 1px solid var(--cor-dourada);
+    padding: 8px 20px;
+    border-radius: 20px;
+    transition: background 0.3s, color 0.3s;
+}
+
+.card a:hover {
+    background-color: var(--cor-dourada);
+    color: #111111;
+}
+
+/* ========================================================
+   3. SEÇÃO ZIGUE-ZAGUE (ATRAÇÕES)
+======================================================== */
+#atracoes-zigzag {
+    display: flex;
+    flex-direction: column; /* Empilha um card em cima do outro */
+    align-items: center;
+    gap: 40px;              /* Espaço entre cada card */
+    max-width: 1100px;
+    margin: 0 auto 60px;
+    padding: 0 20px;
+}
+
+/* O card horizontal (Foto de um lado, Texto do outro) */
+.linha-zigzag {
+    display: flex;
+    flex-direction: row;    /* Força o alinhamento lado a lado dentro do card */
+    width: 100%;
+    background-color: var(--fundo-cards);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+}
+
+/* Inverte a posição apenas nos blocos com a classe 'reverso' */
+.linha-zigzag.reverso {
+    flex-direction: row-reverse;
+}
+
+/* Garante que imagem e texto dividam o card exatamente ao meio */
+.imagem-zigzag {
+    flex: 1;
+    min-height: 350px;
+    background-size: cover;
+    background-position: center;
+}
+
+.texto-zigzag {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.texto-zigzag h3 {
+    color: var(--cor-destaque);
+    font-size: 2.2rem;
+    margin-bottom: 15px;
+}
+
+.texto-zigzag p {
+    color: var(--cor-texto);
+    font-size: 1.1rem;
+    line-height: 1.7;
+    margin-bottom: 20px;
+}

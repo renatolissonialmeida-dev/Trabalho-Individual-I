@@ -1,0 +1,196 @@
+/* ========================================================
+   1. ESTRUTURA PRINCIPAL (MAIN)
+======================================================== */
+main {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 0 20px;
+    color: var(--cor-texto, #ffffff);
+}
+
+/* ========================================================
+   2. TIPOGRAFIA E TÍTULOS
+======================================================== */
+main h2 {
+    color: var(--cor-dourada, #ffee00);
+    font-size: 2.2rem;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+    border-bottom: 2px solid var(--cor-destaque, #ff0000);
+    padding-bottom: 10px;
+}
+
+main h3, main h4 {
+    color: var(--cor-dourada, #ffee00);
+    font-size: 1.4rem;
+    margin-top: 25px;
+    margin-bottom: 15px;
+}
+
+/* ========================================================
+   3. TEXTOS, LISTAS E LINKS
+======================================================== */
+article {
+    margin-bottom: 30px;
+    line-height: 1.7;
+    font-size: 1.05rem;
+}
+
+article p {
+    margin-bottom: 15px;
+}
+
+article a {
+    color: var(--cor-dourada, #ffee00);
+    text-decoration: underline;
+    transition: color 0.3s;
+}
+
+article a:hover {
+    color: var(--cor-destaque, #ff0000);
+}
+
+article ol, article ul {
+    margin: 15px 0 20px 25px;
+    line-height: 1.8;
+}
+
+article li {
+    margin-bottom: 10px;
+}
+
+/* ========================================================
+   4. IMAGENS E FUNDADORES (FIGURE)
+======================================================== */
+.fundadores-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 40px 0;
+    flex-wrap: wrap; /* Adapta para telas de celular automaticamente */
+}
+
+.card-fundador {
+    background: rgba(20, 20, 20, 0.8);
+    border: 1px solid rgba(255, 238, 0, 0.2);
+    border-radius: 12px;
+    padding: 20px;
+    width: 260px;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+/* Efeito ao passar o mouse: o card eleva e brilha em dourado */
+.card-fundador:hover {
+    transform: translateY(-8px);
+    border-color: var(--cor-dourada, #ffee00);
+    box-shadow: 0 8px 25px rgba(255, 238, 0, 0.25);
+}
+
+/* Moldura que padroniza o tamanho das duas fotos */
+.foto-wrapper {
+    width: 180px;
+    height: 220px;
+    margin: 0 auto 15px auto;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2px solid var(--cor-dourada, #ffee00);
+    background-color: #121212; /* Cor de fundo padrão para fotos transparentes */
+}
+
+.foto-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Corta os excessos sem distorcer ou esticar */
+    object-position: center top;
+}
+
+.card-fundador figcaption strong {
+    display: block;
+    color: var(--cor-dourada, #ffee00);
+    font-size: 1.1rem;
+    margin-bottom: 4px;
+}
+
+.card-fundador figcaption span {
+    display: block;
+    color: var(--cor-texto-mutado, #aaaaaa);
+    font-size: 0.85rem;
+}
+
+/* ========================================================
+   5. DESTAQUES E AVISOS LEGAIS (MARK E BLOCKQUOTE)
+======================================================== */
+mark {
+    background-color: var(--cor-destaque, #ff0000);
+    color: #ffffff;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+blockquote {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-left: 4px solid var(--cor-destaque, #ff0000);
+    margin: 25px 0;
+    padding: 15px 20px;
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+blockquote cite {
+    display: block;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    font-style: normal;
+    color: var(--cor-dourada, #ffee00);
+    font-weight: bold;
+}
+
+/* ========================================================
+   6. TABELA CORPORATIVA (MITOS VS FATOS)
+======================================================== */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    margin-bottom: 40px;
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 14px 18px;
+    text-align: left;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+th {
+    background-color: rgba(255, 238, 0, 0.15); /* Dourado transparente */
+    color: var(--cor-dourada, #ffee00);
+    text-transform: uppercase;
+    font-size: 0.95rem;
+    letter-spacing: 1px;
+}
+
+tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+tr:hover {
+    background-color: rgba(255, 255, 255, 0.05); /* Efeito ao passar o mouse na linha */
+}
+
+/* ========================================================
+   7. ELEMENTOS EXTRAS (DIVISÓRIAS)
+======================================================== */
+hr {
+    border: none;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.15);
+    margin: 35px 0;
+}
