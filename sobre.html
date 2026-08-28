@@ -4,16 +4,19 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <title>Sobre a empresa | Fazbear Entertainment</title>
-    <link rel="stylesheet" href="styles.css"/>
+    <link rel="stylesheet" href="geral.css"/>
+    <link rel="stylesheet" href="sobre.css">
 </head>
+
 <body>
     <header>
-        <!-- Imagem da logo da empresa -->
-        <figure>
-            <img src="imagens/logo_branca.png" alt="Logo empresarial" width="100">
-        </figure>
-
-        <h1>Fazbear Entertainment</h1>
+        <a href="home.html" class="logo-link">
+            <figure>
+                <!-- Logo da empresa -->
+                <img src="imagens/logo_branca.png" alt="Logo empresarial" width="100">
+            </figure>
+            <h1>Fazbear Entertainment</h1>
+        </a>
         
         <nav>
             <a href="home.html">Home</a>
@@ -41,26 +44,26 @@
                 <p>Nosso objetivo sempre foi trazer a alegria e diversão para as crianças em um ambinte "seguro".</p>
 
                 <!-- Imagem dos fundadores -->
-                <div>
-                <table>
-                    <tr>
-                    <td align="center" valign="top">
-                        <figure>
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlgkrvxTp2eI7rSO9bDrn4h9UZ1TxtBb4uBoGMNX_TFQ&s=10" alt="Retrato de William Afton" width="175"/>
-                        <figcaption><small>William Afton - Co-fundador da Fazbear Entertainment.</small></figcaption>
-                        </figure>
-                    </td>
+                <div class="fundadores-container">
+                    <figure class="card-fundador">
+                        <div class="foto-wrapper">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlgkrvxTp2eI7rSO9bDrn4h9UZ1TxtBb4uBoGMNX_TFQ&s=10" alt="Retrato de William Afton"/>
+                        </div>
+                        <figcaption>
+                            <strong>William Afton</strong>
+                            <span>Co-fundador da Fazbear Entertainment</span>
+                        </figcaption>
+                    </figure>
 
-                    <td width="20"></td>
-
-                    <td align="center" valign="top">
-                        <figure>
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT44H4a1U-vtN0yMLCl5WSp7Pv2-zHvGQgkiwYCoMwHLA&s=10" alt="Retrato de Henry Emily" width="200"/>
-                        <figcaption><small>Henry Emily - Co-Fundador da Fazbear Entertainment</small></figcaption>
-                        </figure>
-                    </td>
-                    </tr>
-                </table>
+                    <figure class="card-fundador">
+                        <div class="foto-wrapper">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT44H4a1U-vtN0yMLCl5WSp7Pv2-zHvGQgkiwYCoMwHLA&s=10" alt="Retrato de Henry Emily"/>
+                        </div>
+                        <figcaption>
+                            <strong>Henry Emily</strong>
+                            <span>Co-fundador da Fazbear Entertainment</span>
+                        </figcaption>
+                    </figure>
                 </div>
             </article>
 
@@ -116,11 +119,10 @@
 
     <footer class="site-footer">
         <!-- Topo do Footer (Logo) -->
-        <div class="footer-top logo-container">
-            <!-- Substitua o src pelo link ou caminho da sua imagem do Freddy -->
-            <img src="imagens/logo_branca.png" alt="Logo empresarial" class="footer-icon">
-            <h2 class="footer-logo-text">Fazbear Entertainment</h2>
-        </div>
+        <a href="home.html" class="footer-top logo-container logo-link">
+            <img src="imagens/logo_branca.png" alt="Logo Fazbear" class="footer-icon">
+            <h2 class="footer-logo-text">Fazbear<br>Entertainment</h2>
+        </a>
 
         <!-- Linha Divisória -->
         <hr class="footer-divider" />
@@ -148,9 +150,9 @@
                 <ul>
                     <li><a href="home.html">Home</a></li>
                     <li><a href="sobre.html">Sobre a Empresa</a></li>
-                    <li><a href="atracoes.html">Nossas Atrações</a></li>
-                    <li><a href="reserva.html">Reservar Festa VIP</a></li>
-                    <li><a href="contato.html">Trabalhe Conosco</a></li>
+                    <li><a href="novidade.html">O Mega PizzaPlex</a></li>
+                    <li><a href="reserva.html">Reservar Festa</a></li>
+                    <li><a href="vagas.html">Contratação</a></li>
                 </ul>
             </div>
 
