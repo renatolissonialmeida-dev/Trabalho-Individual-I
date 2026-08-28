@@ -4,15 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fazbear Entertainment | Premium</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="geral.css">
+    <link rel="stylesheet" href="home.css">
 </head>
+
 <body>
     <header>
-        <figure>
-            <!-- Logo da empresa -->
-            <img src="imagens/logo_branca.png" alt="Logo empresarial" width="100">
-        </figure>
-        <h1>Fazbear Entertainment</h1>
+        <a href="home.html" class="logo-link">
+            <figure>
+                <!-- Logo da empresa -->
+                <img src="imagens/logo_branca.png" alt="Logo empresarial" width="100">
+            </figure>
+            <h1>Fazbear Entertainment</h1>
+        </a>
+
         <nav>
             <a href="home.html">Home</a>
             <a href="sobre.html">Sobre a empresa</a>
@@ -23,9 +28,14 @@
     </header>
 
     <main>
-        <!-- 1. HERO COM CARROSSEL DE FUNDO ANIMADO E BOTÃO PULSANTE -->
-        <section id="hero-premium">
-            <div class="hero-conteudo">
+        <!-- 1. INÍCIO -->
+        <section id="inicio">
+            <video autoplay loop muted playsinline class="video-fundo">
+                <source src="arquivos/Vídeo_fnaf.mp4" type="video/mp4">
+                Seu navegador não suporta vídeos em HTML5.
+            </video>x
+
+            <div class="inicio-conteudo">
                 <h2>Bem-vindo à<br>Fazbear Entertainment</h2>
             </div>
         </section>
@@ -103,11 +113,10 @@
 
     <footer class="site-footer">
         <!-- Topo do Footer (Logo) -->
-        <div class="footer-top logo-container">
-            <!-- Substitua o src pelo link ou caminho da sua imagem do Freddy -->
-            <img src="imagens/logo_branca.png" alt="Logo empresarial" class="footer-icon">
-            <h2 class="footer-logo-text">Fazbear Entertainment</h2>
-        </div>
+        <a href="home.html" class="footer-top logo-container logo-link">
+            <img src="imagens/logo_branca.png" alt="Logo Fazbear" class="footer-icon">
+            <h2 class="footer-logo-text">Fazbear<br>Entertainment</h2>
+        </a>
 
         <!-- Linha Divisória -->
         <hr class="footer-divider" />
@@ -135,9 +144,9 @@
                 <ul>
                     <li><a href="home.html">Home</a></li>
                     <li><a href="sobre.html">Sobre a Empresa</a></li>
-                    <li><a href="atracoes.html">Nossas Atrações</a></li>
-                    <li><a href="reserva.html">Reservar Festa VIP</a></li>
-                    <li><a href="contato.html">Trabalhe Conosco</a></li>
+                    <li><a href="novidade.html">O Mega PizzaPlex</a></li>
+                    <li><a href="reserva.html">Reservar Festa</a></li>
+                    <li><a href="vagas.html">Contratação</a></li>
                 </ul>
             </div>
 
