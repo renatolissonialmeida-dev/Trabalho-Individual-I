@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width" />
     <title>Mega PizzaPlex | Fazbear Entertainment</title>
     <link rel="stylesheet" href="geral.css"/>
+    <link rel="stylesheet" href="novidade.css">
 </head>
 
 <body>
@@ -34,13 +35,26 @@
                 <h3>Novo estabelecimento</h3>
                 <p>Apesar de todos os problemas enfrentados com as lendas urbanas, nós da Fazbear Entertainment não nos deixamos abalar. Diante disso, criamos um shopping cheio de tecnologia, diversão e é claro muita pizza. O <b>Freddy Fazbear's Mega Pizzaplex</b> é um lugar com o entretenimento de mais alto nível como:</p>
 
-                <ul>
-                <li>Superstar Daycare.</li>
-                <li>Monty's Gator Golf.</li>
-                <li>Roxy Raceway.</li>
-                <li>Fazer Blast.</li>
-                <li>Bonnie Bowl.</li>
-                </ul>
+                <div class="galeria-expansivel">
+                    <div class="painel" style="background-image: url('imagens/Bonnie_bowl.png');">
+                        <h4>Bonnie Bowl</h4>
+                    </div>
+                    <div class="painel" style="background-image: url('imagens/Superstar_daycare.png');">
+                        <h4>Superstar Daycare</h4>
+                    </div>
+                    <div class="painel" style="background-image: url('imagens/Fazer_blast.png');">
+                        <h4>Fazer Blast</h4>
+                    </div>
+                    <div class="painel" style="background-image: url('imagens/Roxy_Raceway.jpg');">
+                        <h4>Roxy Raceway</h4>
+                    </div>
+                    <div class="painel" style="background-image: url('imagens/Monty_Gator_Golf.jpg');">
+                        <h4>Monty's Gator Golf</h4>
+                    </div>
+                    <div class="painel" style="background-image: url('imagens/Mazercise.png');">
+                        <h4>Mazercise</h4>
+                    </div>
+                </div>
             </article>
 
             <article>
@@ -51,55 +65,91 @@
                 </blockquote>
 
                 <table border="1" cellpadding="10">
-                <caption>Tabela 1 - Atrações principais</caption>
-                <thead>
-                    <tr>
-                    <th>Animatronic</th>
-                    <th>Atração Principal</th>
-                    <th>Status Operacional</th>
-                    </tr>
-                </thead>
+                    <thead>
+                        <tr>
+                        <th>Animatronic</th>
+                        <th>Atração Principal</th>
+                        <th>Status Operacional</th>
+                        </tr>
+                    </thead>
 
-                <tbody>
-                    <tr>
-                    <td>Glamrock Freddy</td>
-                    <td>Fazer Blast</td>
-                    <td><span>Ativo e Seguro</span></td>
-                    </tr>
-                    <tr>
-                    <td>Glamrock Chica</td>
-                    <td>Mazercise</td>
-                    <td><span>Ativa</span></td>
-                    </tr>
-                    <tr>
-                    <td>Montgomery Gator</td>
-                    <td>Monty's Gator Golf</td>
-                    <td><span>Ativo (Comportamento Agressivo)</span></td>
-                    </tr>
-                    <tr>
-                    <td>Roxanne Wolf</td>
-                    <td>Roxy Raceway</td>
-                    <td><span>Operando normalmente</span></td>
-                    </tr>
-                    <tr>
-                    <td>Daycare Attendant (Sun/Moon)</td>
-                    <td>Superstar Daycare</td>
-                    <td>Ativo (Manter luzes acesas)</td>
-                    </tr>
-                    <tr>
-                    <td>Bonnie the Bunny</td>
-                    <td>Bonnie Bowl</td>
-                    <td>Fora de serviço ("Aposentadoria estratégica")</td>
-                    </tr>
-                </tbody>
+                    <tbody>
+                        <tr>
+                        <td>Glamrock Freddy</td>
+                        <td>Fazer Blast</td>
+                        <td><span>Ativo e Seguro</span></td>
+                        </tr>
+                        <tr>
+                        <td>Glamrock Chica</td>
+                        <td>Mazercise</td>
+                        <td><span>Ativa</span></td>
+                        </tr>
+                        <tr>
+                        <td>Montgomery Gator</td>
+                        <td>Monty's Gator Golf</td>
+                        <td><span>Ativo (Comportamento Agressivo)</span></td>
+                        </tr>
+                        <tr>
+                        <td>Roxanne Wolf</td>
+                        <td>Roxy Raceway</td>
+                        <td><span>Operando normalmente</span></td>
+                        </tr>
+                        <tr>
+                        <td>Daycare Attendant (Sun/Moon)</td>
+                        <td>Superstar Daycare</td>
+                        <td>Ativo (Manter luzes acesas)</td>
+                        </tr>
+                        <tr>
+                        <td>Bonnie the Bunny</td>
+                        <td>Bonnie Bowl</td>
+                        <td>Fora de serviço ("Aposentadoria estratégica")</td>
+                        </tr>
+                    </tbody>
                 </table>
+
+                <div class="galeria-animatronics">
+                    <!-- Animatronic 1 -->
+                    <div class="card-animatronic">
+                        <img src="imagens/G_Freddy.png" alt="Glamrock Freddy">
+                        <h4>Glamrock Freddy</h4>
+                    </div>
+
+                    <!-- Animatronic 2 -->
+                    <div class="card-animatronic">
+                        <img src="imagens/G_Chica.jpg" alt="Glamrock Chica">
+                        <h4>Glamrock Chica</h4>
+                    </div>
+
+                    <!-- Animatronic 3 -->
+                    <div class="card-animatronic">
+                        <img src="imagens/Montgomery.png" alt="Montgomery Gator">
+                        <h4>Montgomery Gator</h4>
+                    </div>
+
+                    <!-- Animatronic 4 -->
+                    <div class="card-animatronic">
+                        <img src="imagens/Roxanne.jpg" alt="Roxanne Wolf">
+                        <h4>Roxanne Wolf</h4>
+                    </div>
+
+                    <!-- Animatronic 5 -->
+                    <div class="card-animatronic">
+                        <img src="imagens/Daycare_Attendant.jpg" alt="Sun/Moon (Daycare)">
+                        <h4>Sun/Moon (Daycare)</h4>
+                    </div>
+
+                    <!-- Animatronic 6 -->
+                    <div class="card-animatronic">
+                        <img src="imagens/G_Bonnie.jpg" alt="Glamrock Bonnie">
+                        <h4>Glamrock Bonnie</h4>
+                    </div>
+                </div>
             </article>
 
             <article>
-
                 <aside>
-                    <h3>Aviso interno de manutenção</h3>
-                    <p>Atenção funcionários: É estritamente proibido explorar descer/explorar as instalações no subsolo do PizzaPlex. Barulhos ou ruídos metálicos vindo da antiga tubulação devem ser ignorados e o entulho não deve ser perturbado.</p>
+                    <h3>Aviso aos Visitantes</h3>
+                    <p>Áreas em reforma no subsolo estão temporariamente interditadas para a expansão de novas atrações. Agradecemos a compreensão de todos os nossos convidados!</p>
                 </aside>
 
                 <h3>Regras aos visitantes</h3>
@@ -129,7 +179,7 @@
                     width="560" 
                     height="315" 
                     src="https://www.youtube-nocookie.com/embed/za03xHLz55g" 
-                    title="Vídeo promocional." 
+                    title="Vídeo de segurança." 
                     frameborder="0" 
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                     allowfullscreen>
