@@ -58,7 +58,63 @@ article ol, article ul {
 }
 
 article li {
+    margin-bottom: 15px;
+}
+
+/* ========================================================
+   LINHA DO TEMPO - HISTÓRICO DE FRANQUIAS
+======================================================== */
+.historico-franquias {
+    list-style: none; /* Remove os números padrão */
+    padding-left: 0;
+    margin-left: 15px; 
+    border-left: 3px solid var(--cor-destaque); /* Linha vermelha vertical conectando tudo */
+}
+
+.historico-franquias li {
+    position: relative;
+    padding: 10px 15px 25px 30px; /* Cria espaço à esquerda para o texto não colar na linha */
     margin-bottom: 10px;
+    color: var(--cor-texto);
+    transition: background-color 0.3s ease;
+}
+
+/* Bolinhas douradas na linha do tempo */
+.historico-franquias li::before {
+    content: '';
+    position: absolute;
+    left: -10px; /* Posiciona exatamente em cima da linha vermelha */
+    top: 12px;
+    width: 16px;
+    height: 16px;
+    background-color: var(--fundo-pagina);
+    border: 3px solid var(--cor-dourada); /* Borda dourada */
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.6); /* Brilho corporativo */
+    transition: all 0.3s ease;
+}
+
+/* Estilo do título de cada época */
+.historico-franquias li strong {
+    display: block;
+    color: var(--cor-dourada);
+    font-size: 1.25rem;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Efeito interativo ao passar o mouse no item */
+.historico-franquias li:hover {
+    background-color: rgba(255, 255, 255, 0.03); /* Fundo sutil para destacar a leitura */
+    border-radius: 0 8px 8px 0;
+}
+
+/* A bolinha fica vermelha e brilha mais quando passa o mouse */
+.historico-franquias li:hover::before {
+    background-color: var(--cor-destaque);
+    border-color: var(--cor-destaque);
+    box-shadow: 0 0 15px rgba(158, 27, 27, 0.8);
 }
 
 /* ========================================================
