@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="Conheça a história e os compromissos da Fazbear Entertainment. Onde a magia, a diversão e a inovação tecnológica ganham vida há décadas.">
     <title>Sobre a empresa | Fazbear Entertainment</title>
     <link rel="stylesheet" href="geral.css"/>
     <link rel="stylesheet" href="sobre.css">
@@ -13,7 +14,7 @@
         <a href="home.html" class="logo-link">
             <figure>
                 <!-- Logo da empresa -->
-                <img src="imagens/logo_branca.png" alt="Logo empresarial" width="100">
+                <img src="imagens/logo_branca.webp" alt="Logo empresarial" width="100">
             </figure>
             <h1>Fazbear Entertainment</h1>
         </a>
@@ -21,9 +22,24 @@
         <nav>
             <a href="home.html">Home</a>
             <a href="sobre.html">Sobre a empresa</a>
+            
+            <!-- Novo Menu Dropdown -->
+            <div class="dropdown">
+                <button class="dropbtn">Franquias</button>
+                <div class="dropdown-content">
+                    <a href="family_dinner.html">Fredbear's Family Diner</a>
+                    <a href="freddy_1985.html">Freddy Fazbear's Pizza (1983-1985)</a>
+                    <a href="freddy_1987.html">Freddy Fazbear's Pizza (1987)</a>
+                    <a href="freddy_1990.html">Freddy Fazbear's Pizza (anos 90)</a>
+                </div>
+            </div>
+
             <a href="novidade.html">O Mega Pizzaplex</a>
             <a href="reserva.html">Reservar festa</a>
             <a href="vagas.html">Contratação</a>
+            
+            <!-- Botão de Login -->
+            <a href="login.html" class="btn-login">Login</a>
         </nav>
     </header>
 
@@ -35,10 +51,22 @@
                 <h3>História</h3>
                 <p>Fundada nos anos 80 por <a href="https://freddy-fazbears-pizza.fandom.com/wiki/Henry_Emily">Henry Emily</a> e <a href="https://freddy-fazbears-pizza.fandom.com/wiki/William_Afton">William Afton</a>, a <b>Fazbear Entertainment</b> revolucionou o mercado de pizzarias ao unir um ambiente famíliar com o entretenimento de mais alto nível tecnológico usando robôs animatrônicos para a alegrar a todos. Desde nossos primeiros passos com as seguinte pizzarias:</p>
 
-                <ol>
-                <li><b>Freddy Fazbear's Pizza(1983):</b> O marco inicial após a fundação da empresa, estabelecendo nosso padrão de diversão.</li>
-                <li><b>Freddy Fazbear's Pizza(1987):</b> Ponto de virada tecnológico marcado pela introdução da linha de animatrônicos <i>Toys</i> com reconhecimento facial.</li>
-                <li><b>Freddy Fazbear's Pizza(1990):</b> Retorno aos modelos clássicos e consolidação do nosso menu de pizzas tradicional.</li>
+                <ol class="historico-franquias">
+                    <li><strong>1. Fredbear's Family Dinner (1980-1983)</strong><br>
+                        Fundado no início dos anos 80, este restaurante aconchegante foi o berço da nossa história. Criado para unir famílias com refeições saborosas e entretenimento animacrônico pioneiro, o local estabeleceu nosso compromisso com a diversão. Relatos antigos sobre supostos incidentes mecânicos no local não passam de mitos urbanos sem comprovação técnica; a unidade foi encerrada exclusivamente para abrir caminho para a nossa primeira grande expansão comercial.
+                    </li>
+
+                    <li><strong>2. Freddy Fazbear's Pizza (1983–1985)</strong><br>
+                        A primeira grande pizzaria da marca apresentou ao mundo a formação clássica que todos amam: Freddy, Bonnie, Chica e Foxy. Tornando-se um fenômeno cultural instantâneo, o local definia o padrão de festas infantis da época. Especulações sensacionalistas veiculadas pela mídia na época sobre segurança foram devidamente esclarecidas, e o fechamento temporário do prédio ocorreu para uma completa reestruturação do nosso modelo de negócios.
+                    </li>
+
+                    <li><strong>3. Freddy Fazbear's Pizza (1987)</strong><br>
+                        Conhecida como a "Pizzaria do Futuro", esta unidade representou um salto tecnológico sem precedentes com a introdução da linha <i>Toy</i>, equipada com avançado reconhecimento facial integrado a bancos de dados de segurança. Embora falhas pontuais de compatibilidade no software dos protótipos tenham levado à aposentadoria preventiva dessa linha, o encerramento das atividades após poucas semanas foi uma decisão puramente financeira para realocação de recursos.
+                    </li>
+
+                    <li><strong>4. Freddy Fazbear's Pizza (Anos 90)</strong><br>
+                        Retornando a uma proposta mais acolhedora e nostálgica, esta filial reuniu os personagens originais restaurados em um ambiente vintage. Boatos mal-intencionados sobre a manutenção dos trajes ou instabilidades na rede elétrica noturna nunca foram comprovados. A unidade operou com orgulho até a diretoria optar por um hiato estratégico planejado, preparando a empresa para o seu projeto mais grandioso até hoje: o Mega Pizzaplex.
+                    </li>
                 </ol>
 
                 <p>Nosso objetivo sempre foi trazer a alegria e diversão para as crianças em um ambinte "seguro".</p>
@@ -47,7 +75,7 @@
                 <div class="fundadores-container">
                     <figure class="card-fundador">
                         <div class="foto-wrapper">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlgkrvxTp2eI7rSO9bDrn4h9UZ1TxtBb4uBoGMNX_TFQ&s=10" alt="Retrato de William Afton"/>
+                            <img src="imagens/William_Afton.webp" alt="Retrato de William Afton"/>
                         </div>
                         <figcaption>
                             <strong>William Afton</strong>
@@ -57,7 +85,7 @@
 
                     <figure class="card-fundador">
                         <div class="foto-wrapper">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT44H4a1U-vtN0yMLCl5WSp7Pv2-zHvGQgkiwYCoMwHLA&s=10" alt="Retrato de Henry Emily"/>
+                            <img src="imagens/Henry_Emily.webp" alt="Retrato de Henry Emily"/>
                         </div>
                         <figcaption>
                             <strong>Henry Emily</strong>
@@ -120,7 +148,7 @@
     <footer class="site-footer">
         <!-- Topo do Footer (Logo) -->
         <a href="home.html" class="footer-top logo-container logo-link">
-            <img src="imagens/logo_branca.png" alt="Logo Fazbear" class="footer-icon">
+            <img src="imagens/logo_branca.webp" alt="Logo Fazbear" class="footer-icon">
             <h2 class="footer-logo-text">Fazbear<br>Entertainment</h2>
         </a>
 
@@ -150,9 +178,14 @@
                 <ul>
                     <li><a href="home.html">Home</a></li>
                     <li><a href="sobre.html">Sobre a Empresa</a></li>
-                    <li><a href="novidade.html">O Mega PizzaPlex</a></li>
+                    <li><a href="novidade.html">O Mega Pizzaplex</a></li>
                     <li><a href="reserva.html">Reservar Festa</a></li>
                     <li><a href="vagas.html">Contratação</a></li>
+                    <li><a href="login_html">Login</a></li>
+                    <li><a href="family_dinner.html">Fredbear's Family Diner</a></li>
+                    <li><a href="freddy_1985.html">Freddy Fazbear's Pizza (1983-1985)</a></li>
+                    <li><a href="freddy_1987.html">Freddy Fazbear's Pizza (1987)</a></li>
+                    <li><a href="freddy_1990.html">Freddy Fazbear's Pizza (anos 90)</a></li>
                 </ul>
             </div>
 
