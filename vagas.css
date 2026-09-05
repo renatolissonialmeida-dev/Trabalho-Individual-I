@@ -1,0 +1,196 @@
+/* ========================================================
+   1. ESTRUTURA GERAL E TÍTULOS
+======================================================== */
+main {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Título Principal (H2) - Padrão Corporativo Dourado com Linha Vermelha */
+main h2 {
+    text-align: center;
+    color: var(--cor-dourada);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 1.8rem;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--cor-destaque);
+}
+
+main h2 + p {
+    text-align: center;
+    margin-bottom: 30px;
+    color: var(--cor-texto);
+    font-size: 1.05rem;
+    line-height: 1.6;
+}
+
+/* Subtítulos de seções (H3) */
+main h3 {
+    color: var(--cor-texto); /* Mudado para branco para acessibilidade */
+    border-left: 4px solid var(--cor-destaque); /* Detalhe vermelho lateral */
+    padding-left: 10px;
+    font-size: 1.3rem;
+    margin-top: 25px;
+    margin-bottom: 15px;
+}
+
+/* ========================================================
+   2. SEÇÃO DE BENEFÍCIOS E DOWNLOAD DE DOCUMENTO
+======================================================== */
+#beneficios {
+    margin-bottom: 40px;
+}
+
+#beneficios ul {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 15px;
+    margin: 20px 0 30px 0;
+}
+
+#beneficios li {
+    background-color: var(--fundo-cards);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-left: 4px solid var(--cor-dourada);
+    padding: 15px 20px;
+    border-radius: 6px;
+    color: var(--cor-texto-mutado);
+    line-height: 1.5;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+#beneficios li b {
+    color: var(--cor-dourada);
+    display: block;
+    margin-bottom: 5px;
+    font-size: 1.05rem;
+}
+
+/* Botão de Download do Termo de Isenção em PDF */
+#beneficios a[download] {
+    display: inline-block;
+    background-color: var(--fundo-cards);
+    color: var(--cor-dourada);
+    border: 1px dashed var(--cor-dourada);
+    padding: 12px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 10px;
+    transition: all 0.3s ease;
+}
+
+#beneficios a[download]:hover {
+    background-color: var(--cor-dourada);
+    color: var(--fundo-pagina);
+    box-shadow: 0 0 12px rgba(212, 175, 55, 0.5);
+}
+
+/* ========================================================
+   3. FORMULÁRIO DE CANDIDATURA
+======================================================== */
+#formulario-vagas {
+    margin: 40px 0;
+}
+
+fieldset {
+    border: 2px solid var(--cor-destaque);
+    border-radius: 8px;
+    padding: 25px;
+    margin-bottom: 25px;
+    background-color: var(--fundo-cards);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+legend {
+    background-color: var(--cor-destaque);
+    color: var(--cor-texto);
+    padding: 5px 20px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 1.1rem;
+}
+
+label {
+    font-weight: bold;
+    color: var(--cor-dourada);
+}
+
+/* Campos de entrada e seleção */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+select,
+textarea {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    margin-bottom: 15px;
+    background-color: var(--fundo-pagina);
+    border: 1px solid var(--cor-texto-mutado);
+    color: var(--cor-texto);
+    border-radius: 4px;
+    font-family: inherit;
+    box-sizing: border-box;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input:focus, 
+select:focus, 
+textarea:focus {
+    outline: none;
+    border-color: var(--cor-dourada);
+    box-shadow: 0 0 8px rgba(212, 175, 55, 0.4);
+}
+
+/* Estilação dos Radio Buttons (Turnos) */
+input[type="radio"] {
+    margin-right: 8px;
+    margin-top: 10px;
+    accent-color: var(--cor-destaque);
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+input[type="radio"] + label {
+    color: var(--cor-texto);
+    font-weight: normal;
+    cursor: pointer;
+}
+
+/* Estilo do Checkbox de Termos de Risco */
+input[type="checkbox"] {
+    margin-right: 10px;
+    accent-color: var(--cor-destaque);
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+/* Botão de Envio de Candidatura */
+button[type="submit"] {
+    background-color: var(--cor-destaque);
+    color: var(--cor-texto);
+    border: 2px solid var(--cor-destaque);
+    padding: 15px 30px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+    letter-spacing: 1.5px;
+}
+
+button[type="submit"]:hover {
+    background-color: transparent;
+    color: var(--cor-destaque);
+    box-shadow: 0 0 20px rgba(158, 27, 27, 0.6);
+}
