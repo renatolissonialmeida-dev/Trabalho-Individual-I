@@ -66,6 +66,7 @@ header h1 {
 header nav {
     margin-left: auto;
     display: flex;
+    align-items: center;
     gap: 30px;
 }
 
@@ -93,6 +94,81 @@ header figure img {
     border: none !important;
     box-shadow: none !important;
     transform: none !important;
+}
+
+/* ========================================================
+   MENU DROPDOWN (FRANQUIAS)
+======================================================== */
+.dropdown {
+    display: inline-block;
+    position: relative;
+}
+
+.dropbtn {
+    background: none;
+    color: var(--cor-texto);
+    border: none;
+    font-size: 14px;
+    font-weight: 600;  /* Deixa o texto em negrito */
+    cursor: pointer;
+    padding: 0;
+    font-family: inherit;
+    text-transform: uppercase;
+    transition: color 0.3s;
+}
+
+.dropdown:hover .dropbtn {
+    color: var(--cor-dourada);
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: var(--fundo-cards);
+    min-width: 240px;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.6);
+    z-index: 100;
+    border-top: 3px solid var(--cor-destaque);
+    border-radius: 0 0 6px 6px;
+}
+
+/* Links dentro do dropdown */
+.dropdown-content a {
+    color: var(--cor-texto);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.dropdown-content a:hover {
+    background-color: rgba(212, 175, 55, 0.1);
+    color: var(--cor-dourada);
+}
+
+/* Exibe o menu ao passar o mouse no container */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* ========================================================
+   BOTÃO DE LOGIN NO HEADER
+======================================================== */
+.btn-login {
+    background-color: var(--cor-destaque) !important;
+    color: var(--cor-texto) !important;
+    padding: 8px 20px !important;
+    border-radius: 4px;
+    font-weight: bold;
+    margin-left: 15px;
+    transition: all 0.3s ease;
+}
+
+.btn-login:hover {
+    background-color: var(--cor-dourada) !important;
+    color: #000 !important;
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
 }
 
 /* ========================================================
@@ -145,7 +221,7 @@ header figure img {
 
 /* Textos padrões */
 .footer-col p {
-    color: var(--cor-texto-mutado);
+    color: #bababa;
     line-height: 1.6;
     font-size: 0.95rem;
 }
@@ -158,13 +234,13 @@ header figure img {
 
 .footer-col ul li {
     margin-bottom: 12px;
-    color: var(--cor-texto-mutado);
+    color: #bababa;
     font-size: 0.95rem;
 }
 
 /* Estilo dos links das fontes */
 .footer-col ul li a {
-    color: var(--cor-texto-mutado);
+    color: #bababa;
     text-decoration: none;
     transition: color 0.3s;
 }
@@ -177,8 +253,9 @@ header figure img {
 .footer-bottom {
     text-align: center;
     padding-top: 20px;
+    font-size: 20px; 
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-    color: #777; /* Texto um pouco mais escuro pra não chamar tanta atenção */
+    color: #bababa;
 }
 
 .footer-top.logo-container {
