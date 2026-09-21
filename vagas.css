@@ -194,3 +194,104 @@ button[type="submit"]:hover {
     color: var(--cor-destaque);
     box-shadow: 0 0 20px rgba(158, 27, 27, 0.6);
 }
+
+/* ========================================================
+   4. ESTILOS DOS EFEITOS JAVASCRIPT (MODAL & TOAST)
+======================================================== */
+
+/* Modal Overlay Transparente */
+.modal-overlay-fazbear {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    backdrop-filter: blur(5px);
+    animation: fadeIn 0.3s ease;
+}
+
+/* Card do Comprovante */
+.modal-card-fazbear {
+    background-color: var(--fundo-cards, #1a1a1a);
+    border: 2px solid var(--cor-dourada, #e6b800);
+    border-radius: 12px;
+    padding: 30px;
+    max-width: 480px;
+    width: 90%;
+    box-shadow: 0 0 25px rgba(230, 184, 0, 0.4);
+    color: var(--cor-texto, #ffffff);
+    text-align: center;
+}
+
+.modal-header-fazbear h3 {
+    color: var(--cor-dourada, #e6b800);
+    margin-bottom: 5px;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+}
+
+.modal-body-fazbear {
+    text-align: left;
+    margin: 20px 0;
+    line-height: 1.6;
+}
+
+.codigo-destaque {
+    background-color: rgba(230, 184, 0, 0.15);
+    border: 1px dashed var(--cor-dourada, #e6b800);
+    padding: 10px;
+    text-align: center;
+    font-size: 1.2rem;
+    border-radius: 6px;
+}
+
+.btn-fechar-modal {
+    background-color: var(--cor-destaque, #9e1b1b);
+    color: #fff;
+    border: none;
+    padding: 12px 25px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+.btn-fechar-modal:hover {
+    background-color: #c02424;
+}
+
+/* Notificação Flutuante (Toast) */
+.toast-fazbear {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #111;
+    color: var(--cor-dourada, #e6b800);
+    border: 2px solid var(--cor-dourada, #e6b800);
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
+    z-index: 10000;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.4s ease;
+    max-width: 350px;
+    font-size: 0.9rem;
+}
+
+.toast-fazbear.visivel {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
