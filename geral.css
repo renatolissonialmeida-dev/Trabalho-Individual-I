@@ -276,3 +276,197 @@ header figure img {
     letter-spacing: 2px;
     line-height: 1.3; /* Aproxima as linhas "Fazbear" e "Entertainment" */
 }
+
+/* ========================================================
+   5. RESPONSIVIDADE GLOBAL (TABLETS E CELULARES)
+======================================================== */
+
+/* TABLETS E TELAS MÉDIAS (Menores que 992px) */
+@media (max-width: 992px) {
+    /* Footer: Transforma as 4 colunas em 2 colunas */
+    .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+    }
+
+    /* Formulários e Modais: Ajusta largura proporcional */
+    .auth-container, .modal-card-fazbear {
+        width: 85%;
+        padding: 25px;
+    }
+
+    /* Garante altura mínima para telas de Login/Cadastro em Tablets/iPads */
+    
+    .auth-container, 
+    main.auth-page {
+        min-height: calc(100vh - 250px);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+}
+
+/* SMARTPHONES (Menores que 768px) */
+@media (max-width: 768px) {
+    /* Header: Empilha a logo e o menu */
+    header {
+        flex-direction: column;
+        text-align: center;
+        padding: 15px;
+    }
+
+    /* Trava a logo no tamanho correto para não esticar no mobile */
+    header figure,
+    .logo-link figure {
+        width: auto !important;
+        max-width: 60px !important;
+    }
+
+    header img,
+    .logo-link img {
+        width: auto !important;
+        max-width: 50px !important;
+        height: auto !important;
+    }
+
+    /* Navegação: Transforma os links em botões fluidos */
+    nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 15px;
+    }
+
+    nav a, .dropbtn {
+        font-size: 0.9rem;
+        padding: 8px 12px;
+    }
+
+    /* Dropdown: Adapta para abrir dentro do fluxo no mobile */
+    .dropdown-content {
+        position: static; 
+        width: 100%;
+        text-align: center;
+        box-shadow: none;
+        border: 1px solid var(--cor-dourada, #e6b800);
+    }
+
+    /* Footer: Transforma em 1 coluna centralizada */
+    .footer-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    /* Formulários: Ajuste fino para telas pequenas */
+    .auth-container {
+        width: 92%;
+        padding: 20px 15px;
+    }
+
+    /* Previne o zoom automático inconveniente do iOS ao focar nos campos */
+    .input-group input, 
+    .input-group select, 
+    .input-group textarea {
+        font-size: 16px; 
+    }
+
+    /* Toast (Avisos/Easter Eggs): Centraliza no rodapé da tela */
+    .toast-fazbear {
+        right: 50%;
+        transform: translate(50%, 20px);
+        width: 90%;
+        text-align: center;
+        bottom: 10px;
+    }
+
+    .toast-fazbear.visivel {
+        transform: translate(50%, 0);
+    }
+
+    /* Modal (Comprovante / Crachá): Garante margem de segurança */
+    .modal-card-fazbear {
+        width: 95%;
+        padding: 20px 15px;
+    }
+
+    /* --- TABELA VIRA CARDS NO CELULAR --- */
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+
+    /* Esconde o cabeçalho original com os títulos */
+    thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    /* Cada linha da tabela vira um card individual */
+    tr {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--cor-dourada, #e6b800);
+        border-radius: 8px;
+        margin-bottom: 15px;
+        padding: 12px 15px;
+    }
+
+    /* Cada célula do card vira uma linha com o título à esquerda e valor à direita */
+    td {
+        border: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 8px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.9rem;
+        text-align: right;
+    }
+
+    td:last-child {
+        border-bottom: none;
+    }
+
+    /* Puxa o nome da coluna do atributo data-label no HTML */
+    td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        color: var(--cor-dourada, #e6b800);
+        text-align: left;
+        padding-right: 10px;
+    }
+
+    /* Força o container dos cards a virar 1 única coluna */
+    .galeria-animatronics, 
+    .galeria, 
+    .cards-container, 
+    .animatronicos-grid,
+    .novidade-grid,
+    main .container {
+        display: grid !important;
+        grid-template-columns: 1fr !important; /* 1 card por linha */
+        gap: 20px !important;
+        width: 100% !important;
+    }
+
+    /* Garante que os cards do conteúdo principal ocupem toda a largura (exclui o header) */
+    .card, 
+    .card-animatronico, 
+    article, 
+    main figure {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box;
+    }
+
+    /* Ajusta apenas as imagens dos cards para preencher o bloco sem afetar o header */
+    .card img, 
+    .card-animatronico img, 
+    main figure img {
+        width: 100% !important;
+        height: auto !important;
+        max-height: 250px;
+        object-fit: cover;
+        border-radius: 6px;
+    }
+}
