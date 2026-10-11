@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Bem-vindo ao site da Fazbear Entertainment! Descubra atrações incríveis, reservas para festas e oportunidades de carreira no Mega Pizzaplex.">
+    <title>Home | Fazbear Entertainment</title>
+    <link rel="stylesheet" href="assets/geral.css">
+    <link rel="stylesheet" href="assets/home.css">
+</head>
+
+<body>
+    <header>
+        <a href="home.php" class="logo-link">
+            <figure>
+                <!-- Logo da empresa -->
+                <img src="imagens/logo_branca.webp" alt="Logo empresarial" width="100">
+            </figure>
+            <h1>Fazbear Entertainment</h1>
+        </a>
+
+        <nav>
+            <a href="home.php">Home</a>
+            <a href="sobre.php">Sobre a empresa</a>
+            
+            <!-- Menu Dropdown -->
+            <div class="dropdown">
+                <button class="dropbtn">Franquias</button>
+                <div class="dropdown-content">
+                    <a href="family_dinner.php">Fredbear's Family Diner</a>
+                    <a href="freddy_1985.php">Freddy Fazbear's Pizza (1983-1985)</a>
+                    <a href="freddy_1987.php">Freddy Fazbear's Pizza (1987)</a>
+                    <a href="freddy_1990.php">Freddy Fazbear's Pizza (anos 90)</a>
+                </div>
+            </div>
+
+            <a href="novidade.php">O Mega Pizzaplex</a>
+            <a href="reserva.php">Reservar festa</a>
+            <a href="vagas.php">Contratação</a>
+
+            <?php
+            // Inicia a sessão no PHP se ainda não estiver aberta
+            if (session_status() === PHP_SESSION_NONE) {
+                session_start();
+            }
+
+            // Se houver um usuário autenticado na sessão:
+            if (isset($_SESSION['usuario_id'])) {
+                // Exibe o link exclusivo do perfil
+                if ($_SESSION['perfil'] === 'cliente') {
+                    echo '<a href="minhas_reservas.php" class="link-perfil">Minhas Reservas</a>';
+                } elseif ($_SESSION['perfil'] === 'funcionario') {
+                    echo '<a href="banco_horas.php" class="link-perfil">Banco de Horas</a>';
+                }
+                
+                // Exibe o botão para encerrar a sessão (Logout)
+                echo '<a href="../backend/controllers/logoutController.php" class="btn-logout">Sair</a>';
+            } else {
+                // Se NÃO estiver logado, mantém o botão padrão de Login
+                echo '<a href="login.php" class="btn-login">Login</a>';
+            }
+            ?>
+        </nav>
+    </header>
+
+    <main>
+        <!-- 1. INÍCIO -->
+        <section id="inicio">
+            <video autoplay loop muted playsinline class="video-fundo">
+                <source src="arquivos/Vídeo_fnaf.mp4" type="video/mp4">
+                Seu navegador não suporta vídeos em HTML5.
+            </video>x
+
+            <div class="inicio-conteudo">
+                <h2>Bem-vindo à<br>Fazbear Entertainment</h2>
+            </div>
+        </section>
+
+        <!-- 2. CARDS FLUTUANTES DOS PACOTES DE FESTA -->
+        <section id="pacotes-vip">
+            <h2 class="titulo-secao">Escolha sua Experiência Superstar</h2>
+            <div class="grid-cards">
+                
+                <article class="card card-bronze">
+                    <div class="card-img" style="background-image: url('imagens/Ticket_bronze.webp');"></div>
+                    <h3>Pacote Bronze</h3>
+                    <p>Acesso ao Salão Principal, 1 hora de boliche no Bonnie Bowl e 50 Faz-Tokens por criança. Ideal para até 10 pessoas.</p>
+                    <a href="reserva.php">Selecionar Pacote</a>
+                </article>
+
+                <article class="card card-ouro">
+                    <div class="card-img" style="background-image: url('imagens/Ticket_ouro.webp');"></div>
+                    <h3>Pacote Glamrock Gold</h3>
+                    <p>Acesso livre ao Fazer Blast e Creche (Daycare), além de visita rápida do Glamrock Freddy na mesa do bolo. Para até 25 pessoas.</p>
+                    <a href="reserva.php">Selecionar Pacote</a>
+                </article>
+
+                <article class="card card-diamante">
+                    <div class="card-img" style="background-image: url('imagens/Ticket_diamante.webp');"></div>
+                    <h3>Pacote VIP Superstar</h3>
+                    <p>Acesso ilimitado a todas as atrações (incluindo Roxy Raceway), camarote VIP exclusivo e presença de toda a banda Glamrock. Para até 50 pessoas.</p>
+                    <a href="reserva.php">Selecionar Pacote</a>
+                </article>
+            </div>
+        </section>
+
+        <!-- 3. ATRAÇÕES EM ZIGUE-ZAGUE -->
+        <section id="atracoes-zigzag">
+            <h2 class="titulo-secao">Um Mundo de Atrações</h2>
+
+            <!-- Bloco 1: ROXY RACEWAY -->
+            <div class="linha-zigzag">
+                <div class="imagem-zigzag" style="background-image: url('imagens/Roxy_Raceway.webp');"></div>
+                <div class="texto-zigzag">
+                    <h3>Roxy Raceway</h3>
+                    <p>Sinta a adrenalina na nossa pista profissional de Go-Kart. Projetada com curvas de alta velocidade e neon pulsante, é a experiência definitiva para quem busca competição e diversão.</p>
+                </div>
+            </div>
+
+            <!-- Bloco 2: MONTY'S GATOR GOLF  -->
+            <div class="linha-zigzag reverso">
+                <div class="imagem-zigzag" style="background-image: url('imagens/Monty_Gator_Golf.webp');"></div>
+                <div class="texto-zigzag">
+                    <h3>Monty's Gator Golf</h3>
+                    <p>Um campo de mini-golfe de 18 buracos imerso em uma selva tropical indoor. Cuidado com os obstáculos aquáticos e venha provar que você tem a mira perfeita.</p>
+                </div>
+            </div>
+
+            <!-- Bloco 3: FAZER BLAST -->
+            <div class="linha-zigzag">
+                <div class="imagem-zigzag" style="background-image: url('imagens/Fazer_blast.webp');"></div>
+                <div class="texto-zigzag">
+                    <h3>Fazer Blast</h3>
+                    <p>Equipe-se com blasters de laser de última geração e entre em uma arena espacial cheia de luzes neon e efeitos especiais. Derrote o exército de robôs invasores, defenda a galáxia com sua equipe e dispute o topo do placar de líderes da atração!</p>
+                </div>
+            </div>
+
+            <!-- Bloco 4: SUPERSTAR DAYCARE -->
+            <div class="linha-zigzag reverso">
+                <div class="imagem-zigzag" style="background-image: url('imagens/Superstar_daycare.webp');"></div>
+                <div class="texto-zigzag">
+                    <h3>Superstar Daycare</h3>
+                    <p>O espaço definitivo para as crianças menores se divertirem com total segurança. Conta com uma piscina de bolinhas gigante, estruturas de escalada coloridas e o atendimento atencioso dos nossos monitores em um ambiente mágico e supervisionado.</p>
+                </div>
+            </div>
+
+            <!-- Bloco 5: BONNIE BOWL -->
+            <div class="linha-zigzag">
+                <div class="imagem-zigzag" style="background-image: url('imagens/Bonnie_bowl.webp');"></div>
+                <div class="texto-zigzag">
+                    <h3>Bonnie Bowl</h3>
+                    <p>Calce seus sapatos de boliche e prepare-se para o strike perfeito! O Bonnie Bowl traz uma clássica energia retrô com pistas reluzentes, iluminação vibrante e os melhores lanches do Pizzaplex. Reúna a turma, desafie seus amigos e domine as pistas na atração mais charmosa do complexo!</p>
+                </div>
+            </div>
+
+            <!-- Bloco 6: MAZERCISE -->
+            <div class="linha-zigzag reverso">
+                <div class="imagem-zigzag" style="background-image: url('imagens/Mazercise.webp');"></div>
+                <div class="texto-zigzag">
+                    <h3>Mazercise</h3>
+                    <p>Prepare-se para queimar calorias da forma mais divertida no labirinto fitness da Glamrock Chica! O Mazercise combina exercícios dinâmicos, obstáculos coloridos e muita energia em um desafio interativo. E o melhor de tudo: depois de se exercitar, você pode se recompensar com as pizzas e shakes mais deliciosos do Pizzaplex!</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <!-- Topo do Footer (Logo) -->
+        <a href="home.php" class="footer-top logo-container logo-link">
+            <img src="imagens/logo_branca.webp" alt="Logo Fazbear" class="footer-icon">
+            <h2 class="footer-logo-text">Fazbear<br>Entertainment</h2>
+        </a>
+
+        <!-- Linha Divisória -->
+        <hr class="footer-divider" />
+
+        <!-- Colunas de Informação -->
+        <div class="footer-grid">
+            
+            <!-- Coluna 1: Localização e Horários (Igual a referência) -->
+            <div class="footer-col">
+                <h3>Nossa Localização</h3>
+                <p>1987 Hurricane, Utah<br>
+                Mega Pizzaplex Center<br>
+                (1-800) FAZ-BEAR</p>
+
+                <h3 class="margin-top">Horários</h3>
+                <p><b>Seg - Qui:</b> 11:00 AM - 21:00 PM<br>
+                <b>Sex:</b> 11:00 AM - 00:00 PM<br>
+                <b>Sáb:</b> 10:00 AM - 00:00 PM<br>
+                <b>Dom:</b> 11:00 AM - 21:00 PM</p>
+            </div>
+
+            <!-- Coluna 2: "Aba" de navegação-->
+            <div class="footer-col">
+                <h3>Acesso Rápido</h3>
+                <ul>
+                    <li><a href="home.php">Home</a></li>
+                    <li><a href="sobre.php">Sobre a Empresa</a></li>
+                    <li><a href="novidade.php">O Mega Pizzaplex</a></li>
+                    <li><a href="reserva.php">Reservar Festa</a></li>
+                    <li><a href="vagas.php">Contratação</a></li>
+                    <li><a href="login.php">Login</a></li>
+                    <li><a href="family_dinner.php">Fredbear's Family Diner</a></li>
+                    <li><a href="freddy_1985.php">Freddy Fazbear's Pizza (1983-1985)</a></li>
+                    <li><a href="freddy_1987.php">Freddy Fazbear's Pizza (1987)</a></li>
+                    <li><a href="freddy_1990.php">Freddy Fazbear's Pizza (anos 90)</a></li>
+                </ul>
+            </div>
+
+            <!-- Coluna 3: Informações do Projeto -->
+            <div class="footer-col">
+                <h3>Sobre o Projeto</h3>
+                <ul>
+                    <li><b>Autor:</b> Renato Lissoni de Almeida</li>
+                    <li><b>Disciplina:</b> Sistemas Computacionais</li>
+                    <li><b>Data:</b> 22 de setembro de 2026</li>
+                    <li><b>Contato RH:</b> rl.almeida@unesp.br</li>
+                </ul>
+            </div>
+
+            <!-- Coluna 4: Fontes -->
+            <div class="footer-col">
+                <h3>Fontes e Referências</h3>
+                <ul>
+                    <li><a href="https://store.steampowered.com/app/732690/FIVE_NIGHTS_AT_FREDDYS_HELP_WANTED/" target="_blank">FNAF no Steam</a></li>
+                    <li><a href="https://freddy-fazbears-pizza.fandom.com/wiki/Freddy_Fazbear%27s_Pizza_Wiki" target="_blank">FNAF Wiki</a></li>
+                    <li><a href="https://commons.wikimedia.org/" target="_blank">Wikimedia Commons</a></li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- O aviso legal macabro lá no finalzinho -->
+        <div class="footer-bottom">
+            <p><small>&copy; 2026 Fazbear Entertainment. O desaparecimento de clientes dentro do shopping não é de nossa responsabilidade.</small></p>
+        </div>
+    </footer>
+    <script src="assets/script.js"></script>
+</body>
+</html>

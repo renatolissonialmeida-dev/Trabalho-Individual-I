@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="Explore o Freddy Fazbear's Mega Pizzaplex! Fique por dentro de todas as atrações, tecnologia dos animatrônicos Glamrock, praça de alimentação e jogos futuristas.">
+    <title>Mega Pizzaplex | Fazbear Entertainment</title>
+    <link rel="stylesheet" href="assets/geral.css"/>
+    <link rel="stylesheet" href="assets/novidade.css">
+</head>
+
+<body>
+    <header>
+        <a href="home.php" class="logo-link">
+            <figure>
+                <!-- Logo da empresa -->
+                <img src="imagens/logo_branca.webp" alt="Logo empresarial" width="100">
+            </figure>
+            <h1>Fazbear Entertainment</h1>
+        </a>
+        
+        <nav>
+            <a href="home.php">Home</a>
+            <a href="sobre.php">Sobre a empresa</a>
+            
+            <!-- Menu Dropdown -->
+            <div class="dropdown">
+                <button class="dropbtn">Franquias</button>
+                <div class="dropdown-content">
+                    <a href="family_dinner.php">Fredbear's Family Diner</a>
+                    <a href="freddy_1985.php">Freddy Fazbear's Pizza (1983-1985)</a>
+                    <a href="freddy_1987.php">Freddy Fazbear's Pizza (1987)</a>
+                    <a href="freddy_1990.php">Freddy Fazbear's Pizza (anos 90)</a>
+                </div>
+            </div>
+
+            <a href="novidade.php">O Mega Pizzaplex</a>
+            <a href="reserva.php">Reservar festa</a>
+            <a href="vagas.php">Contratação</a>
+
+            <?php
+            // Inicia a sessão no PHP se ainda não estiver aberta
+            if (session_status() === PHP_SESSION_NONE) {
+                session_start();
+            }
+
+            // Se houver um usuário autenticado na sessão:
+            if (isset($_SESSION['usuario_id'])) {
+                // Exibe o link exclusivo do perfil
+                if ($_SESSION['perfil'] === 'cliente') {
+                    echo '<a href="minhas_reservas.php" class="link-perfil">Minhas Reservas</a>';
+                } elseif ($_SESSION['perfil'] === 'funcionario') {
+                    echo '<a href="banco_horas.php" class="link-perfil">Banco de Horas</a>';
+                }
+                
+                // Exibe o botão para encerrar a sessão (Logout)
+                echo '<a href="../backend/controllers/logoutController.php" class="btn-logout">Sair</a>';
+            } else {
+                // Se NÃO estiver logado, mantém o botão padrão de Login
+                echo '<a href="login.php" class="btn-login">Login</a>';
+            }
+            ?>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>O Mega Pizzaplex</h2>
+
+            <article>
+                <h3>Novo estabelecimento</h3>
+                <p>Apesar de todos os problemas enfrentados com as lendas urbanas, nós da Fazbear Entertainment não nos deixamos abalar. Diante disso, criamos um shopping cheio de tecnologia, diversão e é claro muita pizza. O <b>Freddy Fazbear's Mega Pizzaplex</b> é um lugar com o entretenimento de mais alto nível como:</p>
+
+                <div class="galeria-expansivel">
+                    <div class="painel" style="background-image: url('imagens/Bonnie_bowl.webp');">
+                        <h4>Bonnie Bowl</h4>
+                    </div>
+                    <div class="painel" style="background-image: url('imagens/Superstar_daycare.webp');">
+                        <h4>Superstar Daycare</h4>
+                    </div>
+                    <div class="painel" style="background-image: url('imagens/Fazer_blast.webp');">
+                        <h4>Fazer Blast</h4>
+                    </div>
+                    <div class="painel" style="background-image: url('imagens/Roxy_Raceway.webp');">
+                        <h4>Roxy Raceway</h4>
+                    </div>
+                    <div class="painel" style="background-image: url('imagens/Monty_Gator_Golf.webp');">
+                        <h4>Monty's Gator Golf</h4>
+                    </div>
+                    <div class="painel" style="background-image: url('imagens/Mazercise.webp');">
+                        <h4>Mazercise</h4>
+                    </div>
+                </div>
+            </article>
+
+            <article>
+                <h3>Linha Glamrock</h3>
+                <p>Além desses espaços maravilhosos, nós também criamos uma nova linha de animatronics que possui uma inteligência artificial autônoma em que os animatronics conseguem conversar com as pessoas e ir aonde eles quiserem, além de fazer um show de arrasar. Além disso, para ter uma maior imersão dos nossos clientes com os animatronics, cada lugar de entretenimento é tematizado de acordo com o animatronic.</p>
+                <blockquote>
+                "Caso seu animatronic apresenta falhas de personalidade como se estivessem controlando eles, o comando <code>reset_ia(glamrock_model)</code> pode ser executado nos terminais de serviço"
+                </blockquote>
+
+                <table border="1" cellpadding="10">
+                    <thead>
+                        <tr>
+                        <th>Animatrônico</th>
+                        <th>Atração / Setor</th>
+                        <th>Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td data-label="Animatrônico">Glamrock Freddy</td>
+                            <td data-label="Atração / Setor">Fazer Blast</td>
+                            <td data-label="Status"><span>Ativo e Seguro</span></td>
+                        </tr>
+                        <tr>
+                            <td data-label="Animatrônico">Glamrock Chica</td>
+                            <td data-label="Atração / Setor">Mazercise</td>
+                            <td data-label="Status"><span>Ativa</span></td>
+                        </tr>
+                        <tr>
+                            <td data-label="Animatrônico">Montgomery Gator</td>
+                            <td data-label="Atração / Setor">Monty's Gator Golf</td>
+                            <td data-label="Status"><span>Ativo (Comportamento Agressivo)</span></td>
+                        </tr>
+                        <tr>
+                            <td data-label="Animatrônico">Roxanne Wolf</td>
+                            <td data-label="Atração / Setor">Roxy Raceway</td>
+                            <td data-label="Status"><span>Operando normalmente</span></td>
+                        </tr>
+                        <tr>
+                            <td data-label="Animatrônico">Daycare Attendant (Sun/Moon)</td>
+                            <td data-label="Atração / Setor">Superstar Daycare</td>
+                            <td data-label="Status">Ativo (Manter luzes acesas)</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Animatrônico">Bonnie the Bunny</td>
+                            <td data-label="Atração / Setor">Bonnie Bowl</td>
+                            <td data-label="Status">Fora de serviço ("Aposentadoria estratégica")</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="galeria-animatronics">
+                    <!-- Animatronic 1 -->
+                    <div class="card-animatronic">
+                        <img src="imagens/G_Freddy.webp" alt="Glamrock Freddy">
+                        <h4>Glamrock Freddy</h4>
+                    </div>
+
+                    <!-- Animatronic 2 -->
+                    <div class="card-animatronic">
+                        <img src="imagens/G_Chica.webp" alt="Glamrock Chica">
+                        <h4>Glamrock Chica</h4>
+                    </div>
+
+                    <!-- Animatronic 3 -->
+                    <div class="card-animatronic">
+                        <img src="imagens/Montgomery.webp" alt="Montgomery Gator">
+                        <h4>Montgomery Gator</h4>
+                    </div>
+
+                    <!-- Animatronic 4 -->
+                    <div class="card-animatronic">
+                        <img src="imagens/Roxanne.webp" alt="Roxanne Wolf">
+                        <h4>Roxanne Wolf</h4>
+                    </div>
+
+                    <!-- Animatronic 5 -->
+                    <div class="card-animatronic">
+                        <img src="imagens/Daycare_Attendant.webp" alt="Sun/Moon (Daycare)">
+                        <h4>Sun/Moon (Daycare)</h4>
+                    </div>
+
+                    <!-- Animatronic 6 -->
+                    <div class="card-animatronic">
+                        <img src="imagens/G_Bonnie.webp" alt="Glamrock Bonnie">
+                        <h4>Glamrock Bonnie</h4>
+                    </div>
+                </div>
+            </article>
+
+            <article>
+                <aside>
+                    <h3>Aviso aos Visitantes</h3>
+                    <p>Áreas em reforma no subsolo estão temporariamente interditadas para a expansão de novas atrações. Agradecemos a compreensão de todos os nossos convidados!</p>
+                </aside>
+
+                <h3>Regras aos visitantes</h3>
+                <ul>
+                    <li>É obrigatório o uso do Faz-Watch durante todo o tempo dentro do estabelecimento.</li>
+                    <li>Não ultrapasse as faixas zebradas de segurança no Roxy Raceway.</li>
+                    <li>Toda e qualquer pessoa deve ir embora do estabelecimento até às 24:00 (meia-noite)</li>
+                </ul>
+
+                <h3>Procedimento noturno da segurança</h3>
+                <ol>
+                    <li>Ativar os S.T.A.F.F. Bots de patrulha.</li>
+                    <li>Trancar os portões principais e abaixar as grades de segurança.</li>
+                    <li>Monitorar as câmeras da Creche (Daycare) atentamente, mantendo as luzes acesas.</li>
+                </ol>
+
+                <h3>Glossário de Sistemas</h3>
+                <dl>
+                    <dt><strong>S.T.A.F.F. Bot</strong></dt>
+                    <dd>Dróides autômatos sobre rodas encarregados da limpeza, segurança e distribuição de mapas.</dd>
+                    <dt><strong>Daycare Attendant</strong></dt>
+                    <dd>Animatrônico avançado da creche criado para cuidar das crianças. Possui duas personalidades baseadas na iluminação do ambiente (Sol/Lua).</dd>
+                </dl>
+
+                <h3>Vídeo de treinamento</h3>
+                <iframe 
+                    width="560" 
+                    height="315" 
+                    src="https://www.youtube-nocookie.com/embed/za03xHLz55g" 
+                    title="Vídeo de segurança." 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+                </iframe>
+            </article>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <!-- Topo do Footer (Logo) -->
+        <a href="home.php" class="footer-top logo-container logo-link">
+            <img src="imagens/logo_branca.webp" alt="Logo Fazbear" class="footer-icon">
+            <h2 class="footer-logo-text">Fazbear<br>Entertainment</h2>
+        </a>
+
+        <!-- Linha Divisória -->
+        <hr class="footer-divider" />
+
+        <!-- Colunas de Informação -->
+        <div class="footer-grid">
+            
+            <!-- Coluna 1: Localização e Horários (Igual a referência) -->
+            <div class="footer-col">
+                <h3>Nossa Localização</h3>
+                <p>1987 Hurricane, Utah<br>
+                Mega Pizzaplex Center<br>
+                (1-800) FAZ-BEAR</p>
+
+                <h3 class="margin-top">Horários</h3>
+                <p><b>Seg - Qui:</b> 11:00 AM - 21:00 PM<br>
+                <b>Sex:</b> 11:00 AM - 00:00 PM<br>
+                <b>Sáb:</b> 10:00 AM - 00:00 PM<br>
+                <b>Dom:</b> 11:00 AM - 21:00 PM</p>
+            </div>
+
+            <!-- Coluna 2: "Aba" de navegação-->
+            <div class="footer-col">
+                <h3>Acesso Rápido</h3>
+                <ul>
+                    <li><a href="home.php">Home</a></li>
+                    <li><a href="sobre.php">Sobre a Empresa</a></li>
+                    <li><a href="novidade.php">O Mega Pizzaplex</a></li>
+                    <li><a href="reserva.php">Reservar Festa</a></li>
+                    <li><a href="vagas.php">Contratação</a></li>
+                    <li><a href="login.php">Login</a></li>
+                    <li><a href="family_dinner.php">Fredbear's Family Diner</a></li>
+                    <li><a href="freddy_1985.php">Freddy Fazbear's Pizza (1983-1985)</a></li>
+                    <li><a href="freddy_1987.php">Freddy Fazbear's Pizza (1987)</a></li>
+                    <li><a href="freddy_1990.php">Freddy Fazbear's Pizza (anos 90)</a></li>
+                </ul>
+            </div>
+
+            <!-- Coluna 3: Informações do Projeto -->
+            <div class="footer-col">
+                <h3>Sobre o Projeto</h3>
+                <ul>
+                    <li><b>Autor:</b> Renato Lissoni de Almeida</li>
+                    <li><b>Disciplina:</b> Sistemas Computacionais</li>
+                    <li><b>Data:</b> 22 de setembro de 2026</li>
+                    <li><b>Contato RH:</b> rl.almeida@unesp.br</li>
+                </ul>
+            </div>
+
+            <!-- Coluna 4: Fontes -->
+            <div class="footer-col">
+                <h3>Fontes e Referências</h3>
+                <ul>
+                    <li><a href="https://store.steampowered.com/app/732690/FIVE_NIGHTS_AT_FREDDYS_HELP_WANTED/" target="_blank">FNAF no Steam</a></li>
+                    <li><a href="https://freddy-fazbears-pizza.fandom.com/wiki/Freddy_Fazbear%27s_Pizza_Wiki" target="_blank">FNAF Wiki</a></li>
+                    <li><a href="https://commons.wikimedia.org/" target="_blank">Wikimedia Commons</a></li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- O aviso legal macabro lá no finalzinho -->
+        <div class="footer-bottom">
+            <p><small>&copy; 2026 Fazbear Entertainment. O desaparecimento de clientes dentro do shopping não é de nossa responsabilidade.</small></p>
+        </div>
+    </footer>
+    <script src="assets/script.js"></script>
+</body>
+</html>
