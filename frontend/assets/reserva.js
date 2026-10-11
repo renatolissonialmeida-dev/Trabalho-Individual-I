@@ -146,24 +146,20 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // ========================================================
-    // 3. EVENTO ASSÍNCRONO (SIMULAÇÃO DE API / FETCH)
+    // 3. EVENTO ASSÍNCRONO (CONFIRMAÇÃO EM 2 ETAPAS + PHP/BANCO)
     // ========================================================
 
-    formReserva.addEventListener("submit", async (e) => {
+    formReserva.addEventListener("submit", (e) => {
         e.preventDefault();
 
+        // 1. Validação local dos campos
         if (!validarCapacidade()) {
             alert("Por favor, ajuste a quantidade de convidados para o pacote selecionado.");
             inputConvidados.focus();
             return;
         }
 
-        // Alterar estado do botão para indicar processamento
-        const textoOriginalBtn = btnSubmit.innerHTML;
-        btnSubmit.disabled = true;
-        btnSubmit.innerHTML = "⏳ Conectando aos Servidores Fazbear...";
-
-        // Coleta de dados do formulário
+        // 2. Coleta os dados preenchidos
         const dadosReserva = {
             responsavel: document.getElementById("nome-responsavel").value,
             email: document.getElementById("email-reserva").value,
@@ -172,45 +168,19 @@ document.addEventListener("DOMContentLoaded", () => {
             data: inputData.value,
             horario: selectHorario.value,
             convidados: inputConvidados.value,
-            aniversariante: inputAniversariante.value
+            aniversariante: inputAniversariante.value,
+            observacoes: document.getElementById("observacoes").value || "Nenhuma restrição informada."
         };
 
-        try {
-            // Requisição Assíncrona simulada
-            const respostaServidor = await simularEnvioServidor(dadosReserva);
-
-            if (respostaServidor.sucesso) {
-                exibirModalComprovante(respostaServidor);
-                formReserva.reset();
-                avisoCapacidade.textContent = "";
-            }
-        } catch (erro) {
-            alert("Erro na conexão com a central Fazbear. Tente novamente em instantes.");
-            console.error(erro);
-        } finally {
-            btnSubmit.disabled = false;
-            btnSubmit.innerHTML = textoOriginalBtn;
-        }
+        // 3. Abre o Modal de Confirmação (ETAPA 1: Revisão)
+        exibirModalRevisao(dadosReserva);
     });
 
-    // Função que simula uma chamada de API (Promise / Async)
-    function simularEnvioServidor(dados) {
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                const codigoGerado = "FAZ-" + Math.floor(100000 + Math.random() * 900000);
-                resolve({
-                    sucesso: true,
-                    codigoReserva: codigoGerado,
-                    dadosAgendados: dados,
-                    mensagem: "Reserva confirmada no banco de dados do Mega Pizzaplex!"
-                });
-            }, 2200);
-        });
-    }
-
-    // Modal de Confirmação Final
-    function exibirModalComprovante(resultado) {
-        const { codigoReserva, dadosAgendados } = resultado;
+    // Modal de Revisão antes do Envio Real
+    function exibirModalRevisao(dados) {
+        // Remove modal anterior caso exista
+        const modalExistente = document.querySelector(".modal-overlay-fazbear");
+        if (modalExistente) modalExistente.remove();
 
         const modalOverlay = document.createElement("div");
         modalOverlay.className = "modal-overlay-fazbear";
@@ -218,28 +188,100 @@ document.addEventListener("DOMContentLoaded", () => {
         modalOverlay.innerHTML = `
             <div class="modal-card-fazbear">
                 <div class="modal-header-fazbear">
-                    <h3>🎉 RESERVA CONFIRMADA!</h3>
-                    <p>Fazbear Entertainment Mega Pizzaplex</p>
+                    <h3>📋 CONFIRME SEUS DADOS</h3>
+                    <p>Fazbear Entertainment — Revisão de Reserva</p>
                 </div>
                 <div class="modal-body-fazbear">
-                    <p class="codigo-destaque">Código: <strong>${codigoReserva}</strong></p>
+                    <p><strong>Responsável:</strong> ${dados.responsavel}</p>
+                    <p><strong>E-mail:</strong> ${dados.email}</p>
+                    <p><strong>Telefone:</strong> ${dados.telefone}</p>
+                    <p><strong>Aniversariante:</strong> ${dados.aniversariante}</p>
+                    <p><strong>Pacote:</strong> ${dados.pacote}</p>
+                    <p><strong>Data / Horário:</strong> ${dados.data} às ${dados.horario}</p>
+                    <p><strong>Convidados:</strong> ${dados.convidados} pessoas</p>
+                    <p><strong>Restrições/Alergias:</strong> ${dados.observacoes}</p>
                     <hr>
-                    <p><strong>Responsável:</strong> ${dadosAgendados.responsavel}</p>
-                    <p><strong>Telefone:</strong> ${dadosAgendados.telefone}</p>
-                    <p><strong>Aniversariante:</strong> ${dadosAgendados.aniversariante}</p>
-                    <p><strong>Pacote:</strong> ${dadosAgendados.pacote}</p>
-                    <p><strong>Data / Turno:</strong> ${dadosAgendados.data} às ${dadosAgendados.horario}</p>
-                    <p><strong>Convidados:</strong> ${dadosAgendados.convidados} pessoas</p>
-                    <hr>
-                    <p class="aviso-rodape"><small>Um e-mail de confirmação foi enviado para ${dadosAgendados.email}. Por favor, apresente este código na recepção principal.</small></p>
+                    <p><small>Confira as informações antes de registrar no banco de dados.</small></p>
                 </div>
-                <button id="fechar-modal-fazbear" class="btn-fechar-modal">Entendido</button>
+                <div style="display: flex; gap: 10px; justify-content: center; margin-top: 15px;">
+                    <button id="btn-voltar-reserva" style="background-color: #6c757d; color: white; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer;">Voltar / Corrigir</button>
+                    <button id="btn-confirmar-reserva" style="background-color: #28a745; color: white; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Confirmar e Enviar</button>
+                </div>
             </div>
         `;
 
         document.body.appendChild(modalOverlay);
 
-        document.getElementById("fechar-modal-fazbear").addEventListener("click", () => {
+        // Ação do Botão VOLTAR
+        document.getElementById("btn-voltar-reserva").addEventListener("click", () => {
+            modalOverlay.remove();
+        });
+
+        // Ação do Botão CONFIRMAR (ETAPA 2: Envio para o PHP/Banco)
+        document.getElementById("btn-confirmar-reserva").addEventListener("click", async () => {
+            const btnConfirmar = document.getElementById("btn-confirmar-reserva");
+            btnConfirmar.disabled = true;
+            btnConfirmar.innerHTML = "⏳ Salvando...";
+
+            const formData = new FormData();
+            for (let chave in dados) {
+                formData.append(chave, dados[chave]);
+            }
+
+            try {
+                const resposta = await fetch('../backend/controllers/reservaController.php', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const resultado = await resposta.json();
+
+                if (resultado.sucesso) {
+                    modalOverlay.remove();
+                    exibirModalSucesso(resultado.codigoReserva, dados);
+                    formReserva.reset();
+                    if (avisoCapacidade) avisoCapacidade.textContent = "";
+                } else {
+                    alert("Erro do Servidor: " + resultado.mensagem);
+                    btnConfirmar.disabled = false;
+                    btnConfirmar.innerHTML = "Confirmar e Enviar";
+                }
+            } catch (erro) {
+                alert("Erro na conexão com o servidor. Verifique se o XAMPP está ativo.");
+                console.error(erro);
+                btnConfirmar.disabled = false;
+                btnConfirmar.innerHTML = "Confirmar e Enviar";
+            }
+        });
+    }
+
+    // Modal Final de Sucesso (Comprovante Gerado pelo Banco)
+    function exibirModalSucesso(codigoReserva, dados) {
+        const modalOverlay = document.createElement("div");
+        modalOverlay.className = "modal-overlay-fazbear";
+
+        modalOverlay.innerHTML = `
+            <div class="modal-card-fazbear">
+                <div class="modal-header-fazbear">
+                    <h3>🎉 RESERVA REGISTRADA!</h3>
+                    <p>Fazbear Entertainment Mega Pizzaplex</p>
+                </div>
+                <div class="modal-body-fazbear">
+                    <p class="codigo-destaque">Código no Banco: <strong>${codigoReserva}</strong></p>
+                    <hr>
+                    <p><strong>Responsável:</strong> ${dados.responsavel}</p>
+                    <p><strong>Data / Turno:</strong> ${dados.data} às ${dados.horario}</p>
+                    <p><strong>Pacote:</strong> ${dados.pacote}</p>
+                    <hr>
+                    <p class="aviso-rodape"><small>Sua reserva foi salva com sucesso no banco de dados.</small></p>
+                </div>
+                <button id="fechar-modal-sucesso" class="btn-fechar-modal" style="margin-top: 15px;">Entendido</button>
+            </div>
+        `;
+
+        document.body.appendChild(modalOverlay);
+
+        document.getElementById("fechar-modal-sucesso").addEventListener("click", () => {
             modalOverlay.remove();
         });
     }
