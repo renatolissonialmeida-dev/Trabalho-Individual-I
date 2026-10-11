@@ -1,18 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const authForm = document.querySelector(".auth-form");
+    // Procura o formulário na página (seja de login ou cadastro)
+    const authForm = document.querySelector("form");
     if (!authForm) return;
 
-    // Referências - Elementos de Cadastro
-    const inputNome = document.getElementById("nome");
-    const inputEmailCad = document.getElementById("email-cad");
-    const inputSenhaCad = document.getElementById("senha-cad");
-    const inputSenhaConf = document.getElementById("senha-conf");
-
-    // Referências - Elementos de Login
-    const inputEmailLogin = document.getElementById("email");
-    const inputSenhaLogin = document.getElementById("senha");
-
-    const btnSubmit = authForm.querySelector("button[type='submit']");
+    const btnSubmit = authForm.querySelector("button[type='submit']") || authForm.querySelector("button");
 
     // ========================================================
     // 1. RECURSO DE VISUALIZAR SENHA (ÍCONES SVG ALINHADOS)
@@ -33,50 +24,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const camposSenha = document.querySelectorAll("input[type='password']");
     camposSenha.forEach((input) => {
-        // Cria um wrapper exclusivo em volta do input para alinhar somente com a caixa de texto
         const wrapper = document.createElement("div");
         wrapper.className = "password-wrapper";
-        wrapper.style.position = "relative";
-        wrapper.style.display = "flex";
-        wrapper.style.alignItems = "center";
-        wrapper.style.width = "100%";
+        wrapper.style.cssText = "position: relative; display: flex; align-items: center; width: 100%;";
 
-        // Move o input para dentro do wrapper
         input.parentNode.insertBefore(wrapper, input);
         wrapper.appendChild(input);
 
-        // Cria o botão com o ícone SVG
         const btnOlho = document.createElement("button");
         btnOlho.type = "button";
         btnOlho.innerHTML = svgOlhoAberto;
         btnOlho.title = "Mostrar/Ocultar senha";
-        btnOlho.className = "btn-toggle-senha";
         btnOlho.style.cssText = `
-            position: absolute;
-            right: 12px;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--cor-dourada, #e6b800);
-            opacity: 0.7;
-            transition: opacity 0.2s ease, transform 0.2s ease;
-            z-index: 5;
+            position: absolute; right: 12px; background: transparent; border: none;
+            cursor: pointer; padding: 0; display: flex; align-items: center;
+            justify-content: center; color: var(--cor-dourada, #e6b800); opacity: 0.7;
+            transition: opacity 0.2s ease, transform 0.2s ease; z-index: 5;
         `;
 
-        btnOlho.addEventListener("mouseenter", () => {
-            btnOlho.style.opacity = "1";
-            btnOlho.style.transform = "scale(1.1)";
-        });
-        btnOlho.addEventListener("mouseleave", () => {
-            btnOlho.style.opacity = "0.7";
-            btnOlho.style.transform = "scale(1)";
-        });
-
-        // Alterna entre os dois ícones SVG
         btnOlho.addEventListener("click", () => {
             if (input.type === "password") {
                 input.type = "text";
@@ -87,12 +52,12 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
-        input.style.paddingRight = "42px"; // Espaço interno para o texto não ficar embaixo do ícone
+        input.style.paddingRight = "42px";
         wrapper.appendChild(btnOlho);
     });
 
     // ========================================================
-    // 2. FUNÇÕES UTILITÁRIAS E VALIDAÇÃO DE SENHA FORTE
+    // 2. FUNÇÕES UTILITÁRIAS E EASTER EGGS
     // ========================================================
     function mostrarToast(mensagem) {
         const toast = document.createElement("div");
@@ -107,34 +72,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 4000);
     }
 
-    function exibirModalAuth(titulo, subtitulo, mensagem) {
-        const modalOverlay = document.createElement("div");
-        modalOverlay.className = "modal-overlay-fazbear";
-        modalOverlay.innerHTML = `
-            <div class="modal-card-fazbear">
-                <div class="modal-header-fazbear">
-                    <h3>${titulo}</h3>
-                    <p>${subtitulo}</p>
-                </div>
-                <div class="modal-body-fazbear">
-                    <p class="codigo-destaque">${mensagem}</p>
-                </div>
-                <button id="fechar-modal-auth" class="btn-fechar-modal">Entendido</button>
-            </div>
-        `;
-        document.body.appendChild(modalOverlay);
-        document.getElementById("fechar-modal-auth").addEventListener("click", () => modalOverlay.remove());
-    }
-
-    // Regra Padrão: Mín. 8 caracteres, 1 maiúscula, 1 minúscula, 1 número e 1 caractere especial
     function validarSenhaForte(senha) {
         const regexForte = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_#\-])[A-Za-z\d@$!\%*?&_#\-]{8,}$/;
         return regexForte.test(senha);
     }
 
-    // ========================================================
-    // 3. EASTER EGGS GERAIS (E-MAILS E NOMES)
-    // ========================================================
     function checarEasterEgg(valor) {
         if (!valor) return;
         const texto = valor.toLowerCase();
@@ -142,134 +84,97 @@ document.addEventListener("DOMContentLoaded", () => {
         if (texto.includes("william") || texto.includes("afton")) {
             mostrarToast("🟣 [ERRO DE SISTEMA]: Credenciais corrompidas. I ALWAYS COME BACK.");
         } else if (texto.includes("vanessa") || texto.includes("vanny")) {
-            mostrarToast("🔦 [ACESSO NÍVEL 3]: Bem-vinda, Oficial Vanessa. Relatório de anomalias pendente.");
+            mostrarToast("🔦 [ACESSO NÍVEL 3]: Bem-vinda, Oficial Vanessa.");
         } else if (texto.includes("michael") || texto.includes("mike")) {
             mostrarToast("🍕 'Você de novo? A gerência já perdeu a conta de quantas vezes você mudou de nome.'");
         } else if (texto.includes("gregory")) {
             mostrarToast("🤖 'Gregory, eu sinto que sua conta não tem permissão dos pais...'");
-        } else if (texto.includes("fazbear.com")) {
-            mostrarToast("💼 E-mail corporativo detectado. Redirecionando para servidor interno...");
         }
     }
 
-    // ========================================================
-    // 4. LÓGICA DA PÁGINA DE CADASTRO
-    // ========================================================
-    if (inputNome && inputEmailCad && inputSenhaCad && inputSenhaConf) {
-        
-        // Elemento para dica de senha forte
-        const dicaSenha = document.createElement("small");
-        dicaSenha.style.display = "block";
-        dicaSenha.style.marginTop = "4px";
-        dicaSenha.style.fontSize = "0.78rem";
-        inputSenhaCad.parentNode.appendChild(dicaSenha);
+    // Identifica quais campos existem na tela atual
+    const inputEmailLogin = document.getElementById("email");
+    const inputSenhaLogin = document.getElementById("senha");
+    
+    const inputNomeCad = document.getElementById("nome");
+    const inputEmailCad = document.getElementById("email-cad");
+    const inputSenhaCad = document.getElementById("senha-cad");
+    const inputSenhaConf = document.getElementById("senha-conf");
 
-        // Validação dinâmica de força da senha
-        inputSenhaCad.addEventListener("input", () => {
-            const senha = inputSenhaCad.value;
-            if (senha === "") {
-                dicaSenha.textContent = "";
-                inputSenhaCad.style.borderColor = "";
-            } else if (!validarSenhaForte(senha)) {
-                dicaSenha.textContent = "⚠️ Mínimo 8 caracteres, com maiúscula, minúscula, número e símbolo (@$!%*?&).";
-                dicaSenha.style.color = "#ff4d4d";
-                inputSenhaCad.style.borderColor = "#ff4d4d";
-            } else {
-                dicaSenha.textContent = "✓ Senha forte aprovada!";
-                dicaSenha.style.color = "#4caf50";
-                inputSenhaCad.style.borderColor = "#4caf50";
+    // Adiciona checagem de Easter Eggs nos campos que existirem
+    if (inputEmailLogin) inputEmailLogin.addEventListener("blur", (e) => checarEasterEgg(e.target.value));
+    if (inputNomeCad) inputNomeCad.addEventListener("blur", (e) => checarEasterEgg(e.target.value));
+    if (inputEmailCad) inputEmailCad.addEventListener("blur", (e) => checarEasterEgg(e.target.value));
+
+    // AQUI ESTÁ O CÓDIGO NOVO: Valida a senha assim que o usuário tira o mouse do campo
+    if (inputSenhaCad) {
+        inputSenhaCad.addEventListener("blur", (e) => {
+            const senhaDigitada = e.target.value;
+            if (senhaDigitada.length > 0 && !validarSenhaForte(senhaDigitada)) {
+                mostrarToast("⚠️ A senha precisa ser forte (letras, números e símbolos).");
             }
-            validarCoincidenciaSenhas();
         });
+    }
 
-        // Validação dinâmica de confirmação de senha
-        function validarCoincidenciaSenhas() {
-            if (inputSenhaConf.value === "") {
-                inputSenhaConf.style.borderColor = "";
-                return;
-            }
-            if (inputSenhaCad.value === inputSenhaConf.value) {
-                inputSenhaConf.style.borderColor = "#4caf50";
-            } else {
-                inputSenhaConf.style.borderColor = "#ff4d4d";
-            }
+    // ========================================================
+    // 3. ENVIO DO FORMULÁRIO (LOGIN OU CADASTRO)
+    // ========================================================
+    authForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const textoOriginal = btnSubmit ? btnSubmit.innerHTML : "Enviando...";
+        if (btnSubmit) {
+            btnSubmit.disabled = true;
+            btnSubmit.innerHTML = "⏳ Processando...";
         }
 
-        inputSenhaConf.addEventListener("input", validarCoincidenciaSenhas);
+        const formData = new FormData();
 
-        // Dispara os easter eggs ao sair do campo
-        inputNome.addEventListener("blur", (e) => checarEasterEgg(e.target.value));
-        inputEmailCad.addEventListener("blur", (e) => checarEasterEgg(e.target.value));
-
-        // Submissão do Cadastro
-        authForm.addEventListener("submit", async (e) => {
-            e.preventDefault();
-
-            // 1. Verificar Força da Senha
+        // SE FOR A PÁGINA DE CADASTRO
+        if (inputNomeCad) {
             if (!validarSenhaForte(inputSenhaCad.value)) {
-                mostrarToast("⚠️ Sua senha deve ter no mínimo 8 caracteres, letra maiúscula, minúscula, número e símbolo!");
-                inputSenhaCad.focus();
+                mostrarToast("⚠️ A senha precisa ser forte (letras, números e símbolos).");
+                if (btnSubmit) { btnSubmit.disabled = false; btnSubmit.innerHTML = textoOriginal; }
                 return;
             }
-
-            // 2. Verificar se as Senhas Coincidem
             if (inputSenhaCad.value !== inputSenhaConf.value) {
-                mostrarToast("⚠️ Erro: As senhas digitadas não são iguais!");
-                inputSenhaConf.focus();
+                mostrarToast("⚠️ As senhas não coincidem!");
+                if (btnSubmit) { btnSubmit.disabled = false; btnSubmit.innerHTML = textoOriginal; }
                 return;
             }
+            formData.append("acao", "cadastrar");
+            formData.append("nome", inputNomeCad.value);
+            formData.append("email", inputEmailCad.value);
+            formData.append("senha", inputSenhaCad.value);
+        } 
+        // SE FOR A PÁGINA DE LOGIN
+        else if (inputEmailLogin) {
+            formData.append("acao", "login");
+            formData.append("email", inputEmailLogin.value);
+            formData.append("senha", inputSenhaLogin.value);
+        }
 
-            const textoOriginal = btnSubmit.innerHTML;
-            btnSubmit.disabled = true;
-            btnSubmit.innerHTML = "⏳ Criando sua conta...";
+        try {
+            const resposta = await fetch("../backend/controllers/authController.php", {
+                method: "POST",
+                body: formData
+            });
+            const resultado = await resposta.json();
 
-            try {
-                await new Promise(resolve => setTimeout(resolve, 2000));
-                exibirModalAuth(
-                    "🎉 BEM-VINDO À FAMÍLIA!",
-                    "Fazbear Entertainment - Novo ID",
-                    "Sua conta foi criada com sucesso! Você já pode acessar o portal e reservar suas festas."
-                );
-                authForm.reset();
-                dicaSenha.textContent = "";
-                inputSenhaCad.style.borderColor = "";
-                inputSenhaConf.style.borderColor = "";
-            } catch (erro) {
-                mostrarToast("Erro ao conectar com o banco de dados.");
-            } finally {
+            if (resultado.sucesso) {
+                // Vai direto para a home em ambos os casos
+                window.location.href = "home.php";
+            } else {
+                mostrarToast("⚠️ " + resultado.mensagem);
+            }
+        } catch (erro) {
+            mostrarToast("Erro ao conectar com os servidores centrais.");
+            console.error(erro);
+        } finally {
+            if (btnSubmit) {
                 btnSubmit.disabled = false;
                 btnSubmit.innerHTML = textoOriginal;
             }
-        });
-    }
-
-    // ========================================================
-    // 5. LÓGICA DA PÁGINA DE LOGIN
-    // ========================================================
-    if (inputEmailLogin) {
-        inputEmailLogin.addEventListener("blur", (e) => checarEasterEgg(e.target.value));
-
-        authForm.addEventListener("submit", async (e) => {
-            e.preventDefault();
-
-            const textoOriginal = btnSubmit.innerHTML;
-            btnSubmit.disabled = true;
-            btnSubmit.innerHTML = "⏳ Autenticando na Rede...";
-
-            try {
-                await new Promise(resolve => setTimeout(resolve, 1800));
-                exibirModalAuth(
-                    "🔓 ACESSO LIBERADO",
-                    "Rede Corporativa Fazbear",
-                    "Autenticação efetuada com sucesso. Bem-vindo de volta ao Mega Pizzaplex!"
-                );
-                authForm.reset();
-            } catch (erro) {
-                mostrarToast("Erro ao conectar com os servidores centrais.");
-            } finally {
-                btnSubmit.disabled = false;
-                btnSubmit.innerHTML = textoOriginal;
-            }
-        });
-    }
+        }
+    });
 });
