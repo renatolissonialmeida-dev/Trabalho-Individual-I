@@ -74,81 +74,126 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // Evento Assíncrono da Candidatura
-    formVagas.addEventListener("submit", async (e) => {
+    // ========================================================
+    // 3. EVENTO ASSÍNCRONO DA CANDIDATURA (2 ETAPAS + PHP/BANCO)
+    // ========================================================
+    formVagas.addEventListener("submit", (e) => {
         e.preventDefault();
-
-        const textoOriginalBtn = btnSubmitVagas.innerHTML;
-        btnSubmitVagas.disabled = true;
-        btnSubmitVagas.innerHTML = "⏳ Analisando ficha na base do RH...";
 
         const turnoSelecionado = radioNoturno.checked ? "Noturno (00:00 - 06:00)" : "Diurno (08:00 - 16:00)";
 
+        // Adicionando a experiência que faltava e o email para exibição
         const dadosCandidato = {
             nome: inputNome.value,
             email: document.getElementById("email").value,
             telefone: inputTelVagas.value,
             cargo: selectCargo.options[selectCargo.selectedIndex].text,
-            turno: turnoSelecionado
+            turno: turnoSelecionado,
+            experiencia: inputExperiencia.value || "Nenhuma experiência prévia informada."
         };
 
-        try {
-            const respostaRH = await new Promise((resolve) => {
-                setTimeout(() => {
-                    resolve({
-                        sucesso: true,
-                        matricula: "EMP-" + Math.floor(100000 + Math.random() * 900000),
-                        candidato: dadosCandidato
-                    });
-                }, 2300);
-            });
-
-            if (respostaRH.sucesso) {
-                exibirModalCracha(respostaRH);
-                formVagas.reset();
-                avisoCargo.textContent = "";
-            }
-        } catch (erro) {
-            alert("Erro ao conectar com o sistema de recrutamento do Pizzaplex.");
-        } finally {
-            btnSubmitVagas.disabled = false;
-            btnSubmitVagas.innerHTML = textoOriginalBtn;
-        }
+        // Chama o modal de revisão (ETAPA 1)
+        exibirModalRevisaoVaga(dadosCandidato);
     });
 
-    function mostrarToast(mensagem) {
-        const toast = document.createElement("div");
-        toast.className = "toast-fazbear";
-        toast.innerText = mensagem;
-        document.body.appendChild(toast);
-        setTimeout(() => toast.classList.add("visivel"), 100);
-        setTimeout(() => {
-            toast.classList.remove("visivel");
-            setTimeout(() => toast.remove(), 400);
-        }, 4000);
+    // Modal de Revisão antes do Envio Real
+    function exibirModalRevisaoVaga(dados) {
+        const modalExistente = document.querySelector(".modal-overlay-fazbear");
+        if (modalExistente) modalExistente.remove();
+
+        const modalOverlay = document.createElement("div");
+        modalOverlay.className = "modal-overlay-fazbear";
+
+        modalOverlay.innerHTML = `
+            <div class="modal-card-fazbear">
+                <div class="modal-header-fazbear">
+                    <h3>📋 REVISÃO DE CANDIDATURA</h3>
+                    <p>Fazbear Entertainment — Recursos Humanos</p>
+                </div>
+                <div class="modal-body-fazbear">
+                    <p><strong>Candidato:</strong> ${dados.nome}</p>
+                    <p><strong>E-mail:</strong> ${dados.email}</p>
+                    <p><strong>Telefone:</strong> ${dados.telefone}</p>
+                    <p><strong>Vaga Pretendida:</strong> ${dados.cargo}</p>
+                    <p><strong>Turno:</strong> ${dados.turno}</p>
+                    <p><strong>Experiência:</strong> ${dados.experiencia}</p>
+                    <hr>
+                    <p><small>Confira os dados antes de enviar sua ficha ao banco de dados do RH.</small></p>
+                </div>
+                <div style="display: flex; gap: 10px; justify-content: center; margin-top: 15px;">
+                    <button id="btn-voltar-vaga" style="background-color: #6c757d; color: white; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer;">Voltar / Corrigir</button>
+                    <button id="btn-confirmar-vaga" style="background-color: #28a745; color: white; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Confirmar e Enviar</button>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(modalOverlay);
+
+        // Ação do Botão VOLTAR
+        document.getElementById("btn-voltar-vaga").addEventListener("click", () => {
+            modalOverlay.remove();
+        });
+
+        // Ação do Botão CONFIRMAR (ETAPA 2: Envio para o PHP/Banco)
+        document.getElementById("btn-confirmar-vaga").addEventListener("click", async () => {
+            const btnConfirmar = document.getElementById("btn-confirmar-vaga");
+            btnConfirmar.disabled = true;
+            btnConfirmar.innerHTML = "⏳ Enviando ao RH...";
+
+            // O laço de repetição que falamos antes, adicionando todos os campos automaticamente
+            const formData = new FormData();
+            for (let chave in dados) {
+                formData.append(chave, dados[chave]);
+            }
+
+            try {
+                // Requisição Real para a API PHP de Vagas
+                const resposta = await fetch('../backend/controllers/contratacaoController.php', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const resultado = await resposta.json();
+
+                if (resultado.sucesso) {
+                    modalOverlay.remove();
+                    exibirModalCracha(resultado.matricula, dados);
+                    formVagas.reset();
+                    if (typeof avisoCargo !== 'undefined') avisoCargo.textContent = "";
+                } else {
+                    alert("Erro do Servidor: " + resultado.mensagem);
+                    btnConfirmar.disabled = false;
+                    btnConfirmar.innerHTML = "Confirmar e Enviar";
+                }
+            } catch (erro) {
+                alert("Erro ao conectar com o sistema de recrutamento do Pizzaplex. O XAMPP está ligado?");
+                console.error(erro);
+                btnConfirmar.disabled = false;
+                btnConfirmar.innerHTML = "Confirmar e Enviar";
+            }
+        });
     }
 
-    function exibirModalCracha(resultado) {
-        const { matricula, candidato } = resultado;
+    // Modal Final de Sucesso (Matrícula Gerada pelo Banco)
+    function exibirModalCracha(matricula, candidato) {
         const modalOverlay = document.createElement("div");
         modalOverlay.className = "modal-overlay-fazbear";
         modalOverlay.innerHTML = `
             <div class="modal-card-fazbear">
                 <div class="modal-header-fazbear">
-                    <h3>📋 CANDIDATURA RECEBIDA!</h3>
+                    <h3>📋 CANDIDATURA REGISTRADA!</h3>
                     <p>Fazbear Entertainment — Recursos Humanos</p>
                 </div>
                 <div class="modal-body-fazbear">
-                    <p class="codigo-destaque">Matrícula Provisória: <strong>${matricula}</strong></p>
+                    <p class="codigo-destaque">Matrícula no Banco: <strong>${matricula}</strong></p>
                     <hr>
                     <p><strong>Candidato:</strong> ${candidato.nome}</p>
-                    <p><strong>Telefone:</strong> ${candidato.telefone}</p>
                     <p><strong>Vaga Pretendida:</strong> ${candidato.cargo}</p>
                     <p><strong>Turno Escolhido:</strong> ${candidato.turno}</p>
                     <hr>
-                    <p class="aviso-rodape"><small>Seu termo de isenção de responsabilidade foi arquivado. Apresente este número de matrícula no setor de RH antes do seu primeiro turno.</small></p>
+                    <p class="aviso-rodape"><small>Seu termo de isenção de responsabilidade foi arquivado com sucesso no banco de dados. Apresente este número no setor de RH.</small></p>
                 </div>
-                <button id="fechar-modal-cracha" class="btn-fechar-modal">Entendido</button>
+                <button id="fechar-modal-cracha" class="btn-fechar-modal" style="margin-top: 15px;">Entendido</button>
             </div>
         `;
         document.body.appendChild(modalOverlay);
