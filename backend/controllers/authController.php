@@ -6,10 +6,23 @@ if (session_status() === PHP_SESSION_NONE) {
 header('Content-Type: application/json');
 require_once '../config/database.php';
 
-$acao = $_POST['acao'] ?? '';
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    echo json_encode(['sucesso' => false, 'mensagem' => 'Método de requisição inválido.']);
+    exit;
+}
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST' || empty($acao)) {
-    echo json_encode(['sucesso' => false, 'mensagem' => 'Requisição inválida.']);
+// ========================================================
+// PROTEÇÃO CONTRA CSRF (Cross-Site Request Forgery)
+// ========================================================
+$tokenRecebido = $_POST['csrf_token'] ?? '';
+if (empty($tokenRecebido) || empty($_SESSION['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $tokenRecebido)) {
+    echo json_encode(['sucesso' => false, 'mensagem' => 'Falha de validação de segurança (Token CSRF inválido).']);
+    exit;
+}
+
+$acao = $_POST['acao'] ?? '';
+if (empty($acao)) {
+    echo json_encode(['sucesso' => false, 'mensagem' => 'Ação não informada.']);
     exit;
 }
 
@@ -28,6 +41,7 @@ if ($acao === 'cadastrar') {
         exit;
     }
 
+    // Proteção contra SQL Injection (PDO Prepared Statement)
     $stmt = $pdo->prepare("SELECT id FROM usuarios WHERE email = ?");
     $stmt->execute([$email]);
     if ($stmt->fetch()) {
@@ -38,10 +52,15 @@ if ($acao === 'cadastrar') {
     // REGRA DO E-MAIL: Se tiver @fazbear.com vira funcionário, senão vira cliente
     $perfil = (strpos(strtolower($email), '@fazbear.com') !== false) ? 'funcionario' : 'cliente';
 
+    // Criptografia segura com Bcrypt
     $senhaHash = password_hash($senha, PASSWORD_BCRYPT);
 
     $stmtInsert = $pdo->prepare("INSERT INTO usuarios (nome, email, senha, perfil) VALUES (?, ?, ?, ?)");
     if ($stmtInsert->execute([$nome, $email, $senhaHash, $perfil])) {
+        
+        // Segurança de Sessão: Impede Session Fixation ao registrar
+        session_regenerate_id(true);
+
         $_SESSION['usuario_id']   = $pdo->lastInsertId();
         $_SESSION['usuario_nome'] = $nome;
         $_SESSION['perfil']       = $perfil;
@@ -68,11 +87,16 @@ if ($acao === 'login') {
         exit;
     }
 
+    // Proteção contra SQL Injection (PDO Prepared Statement)
     $stmt = $pdo->prepare("SELECT * FROM usuarios WHERE email = ?");
     $stmt->execute([$email]);
     $usuario = $stmt->fetch();
 
     if ($usuario && password_verify($senha, $usuario['senha'])) {
+        
+        // Segurança de Sessão: Impede Session Fixation ao logar
+        session_regenerate_id(true);
+
         $_SESSION['usuario_id']   = $usuario['id'];
         $_SESSION['usuario_nome'] = $usuario['nome'];
         $_SESSION['perfil']       = $usuario['perfil'];
