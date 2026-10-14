@@ -148,7 +148,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             try {
                 // Requisição Real para a API PHP de Vagas
-                const resposta = await fetch('../backend/controllers/contratacaoController.php', {
+                const resposta = await fetch('../backend/controllers/vagasController.php', {
                     method: 'POST',
                     body: formData
                 });
