@@ -19,13 +19,13 @@
             <h1>Fazbear Entertainment</h1>
         </a>
         <nav>
-            <a href="home.php">Home</a>
-            <a href="sobre.php">Sobre a empresa</a>
+            <a href="home.php" style="text-align: center; line-height: 1.2;">Home</a>
+            <a href="sobre.php" style="text-align: center; line-height: 1.2;">Sobre a empresa</a>
             
             <!-- Menu Dropdown -->
-            <div class="dropdown">
-                <button class="dropbtn">Franquias</button>
-                <div class="dropdown-content">
+            <div class="dropdown" style="text-align: center;">
+                <button class="dropbtn" style="text-align: center; line-height: 1.2;">Franquias</button>
+                <div class="dropdown-content" style="text-align: left;">
                     <a href="family_dinner.php">Fredbear's Family Diner</a>
                     <a href="freddy_1985.php">Freddy Fazbear's Pizza (1983-1985)</a>
                     <a href="freddy_1987.php">Freddy Fazbear's Pizza (1987)</a>
@@ -33,9 +33,7 @@
                 </div>
             </div>
 
-            <a href="novidade.php">O Mega Pizzaplex</a>
-            <a href="reserva.php">Reservar festa</a>
-            <a href="vagas.php">Contratação</a>
+            <a href="novidade.php" style="text-align: center; line-height: 1.2;">O Mega Pizzaplex</a>
 
             <?php
             // Inicia a sessão no PHP se ainda não estiver aberta
@@ -43,20 +41,41 @@
                 session_start();
             }
 
-            // Se houver um usuário autenticado na sessão:
+            // Oculta as abas "Reservar festa" e "Contratação" se o utilizador for um funcionário
+            if (!isset($_SESSION['perfil']) || $_SESSION['perfil'] !== 'funcionario') {
+                echo '<a href="reserva.php" style="text-align: center; line-height: 1.2;">Reservar festa</a>';
+                echo '<a href="vagas.php" style="text-align: center; line-height: 1.2;">Contratação</a>';
+            }
+
+            // Se houver um utilizador autenticado na sessão:
             if (isset($_SESSION['usuario_id'])) {
-                // Exibe o link exclusivo do perfil
+                
                 if ($_SESSION['perfil'] === 'cliente') {
-                    echo '<a href="minhas_reservas.php" class="link-perfil">Minhas Reservas</a>';
+                    echo '<a href="minhas_reservas.php" class="link-perfil" style="text-align: center; line-height: 1.2;">Minhas Reservas</a>';
                 } elseif ($_SESSION['perfil'] === 'funcionario') {
-                    echo '<a href="banco_horas.php" class="link-perfil">Banco de Horas</a>';
+                    echo '<a href="banco_horas.php" class="link-perfil" style="text-align: center; line-height: 1.2;">Banco de Horas</a>';
                 }
                 
-                // Exibe o botão para encerrar a sessão (Logout)
-                echo '<a href="../backend/controllers/logoutController.php" class="btn-logout">Sair</a>';
+                // Resgata o nome da sessão corretamente
+                $nomeCompleto = isset($_SESSION['usuario_nome']) ? $_SESSION['usuario_nome'] : 'Visitante';
+                $primeiroNome = explode(' ', trim($nomeCompleto))[0]; 
+
+                // Renderiza o Nome e o Botão de Sair empilhados
+                echo '<div class="user-logout-container" style="display: flex; flex-direction: column; align-items: center; gap: 4px; margin-left: 15px;">';
+                echo '<span style="font-size: 0.85rem; color: var(--cor-dourada, #e6b800); font-weight: bold;">Olá, ' . htmlspecialchars($primeiroNome, ENT_QUOTES, 'UTF-8') . '</span>';
+                
+                // Criamos um estilo rápido e invisível só para esse botão conseguir ter o efeito :hover
+                echo '<style>
+                        .btn-sair-vermelho { background-color: #b5382a !important; color: #ffffff !important; }
+                        .btn-sair-vermelho:hover { background-color: var(--cor-dourada, #e6b800) !important; color: #000000 !important; }
+                    </style>';
+                
+                // Removemos a cor do 'style' e passamos a usar a nossa classe nova 'btn-sair-vermelho'
+                echo '<a href="../backend/controllers/logoutController.php" class="btn-login btn-sair-vermelho" style="text-align: center; margin: 0; padding: 6px 16px; line-height: 1.2;">Sair</a>';
+                echo '</div>';
+
             } else {
-                // Se NÃO estiver logado, mantém o botão padrão de Login
-                echo '<a href="login.php" class="btn-login">Login</a>';
+                echo '<a href="login.php" class="btn-login" style="text-align: center; line-height: 1.2;">Login</a>';
             }
             ?>
         </nav>
