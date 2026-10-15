@@ -1,5 +1,11 @@
 <?php
 if (session_status() === PHP_SESSION_NONE) {
+    session_set_cookie_params([
+        'lifetime' => 0,
+        'path'     => '/',
+        'httponly' => true,
+        'samesite' => 'Lax'
+    ]);
     session_start();
 }
 
@@ -7,6 +13,9 @@ if (session_status() === PHP_SESSION_NONE) {
 if (!isset($_SESSION['usuario_id'])) {
     header("Location: login.php");
     exit;
+}
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
 ?>
 <!DOCTYPE html>
@@ -142,6 +151,9 @@ if (!isset($_SESSION['usuario_id'])) {
         <p>Preencha os dados abaixo para reservar sua data. O processo leva menos de um minuto!</p>
 
         <form action="/painel/reservas" method="POST">
+
+          <!-- TOKEN CSRF INVISÍVEL PARA SEGURANÇA -->
+          <input type="hidden" id="csrf_token" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
           
           <!-- Passo 1: Informações do Responsável -->
           <fieldset>
