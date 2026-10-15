@@ -161,6 +161,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // 2. Coleta os dados preenchidos
         const dadosReserva = {
+            csrf_token: document.getElementById("csrf_token") ? document.getElementById("csrf_token").value : '',
             responsavel: document.getElementById("nome-responsavel").value,
             email: document.getElementById("email-reserva").value,
             telefone: inputTelefone.value,
@@ -224,13 +225,26 @@ document.addEventListener("DOMContentLoaded", () => {
             btnConfirmar.innerHTML = "⏳ Salvando...";
 
             const formData = new FormData();
-            for (let chave in dados) {
-                formData.append(chave, dados[chave]);
-            }
+
+            // Captura o token diretamente do campo HTML no momento do envio
+            const tokenInput = document.getElementById("csrf_token");
+            formData.append("csrf_token", tokenInput ? tokenInput.value : "");
+
+            // Envia os demais campos para o reservaController.php
+            formData.append("responsavel", dados.responsavel);
+            formData.append("email", dados.email);
+            formData.append("telefone", dados.telefone);
+            formData.append("pacote", dados.pacote);
+            formData.append("data", dados.data);
+            formData.append("horario", dados.horario);
+            formData.append("convidados", dados.convidados);
+            formData.append("aniversariante", dados.aniversariante);
+            formData.append("observacoes", dados.observacoes);
 
             try {
                 const resposta = await fetch('../backend/controllers/reservaController.php', {
                     method: 'POST',
+                    credentials: 'same-origin', // Garante o envio do cookie PHPSESSID
                     body: formData
                 });
 
@@ -240,7 +254,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     modalOverlay.remove();
                     exibirModalSucesso(resultado.codigoReserva, dados);
                     formReserva.reset();
-                    if (avisoCapacidade) avisoCapacidade.textContent = "";
+                    if (typeof avisoCapacidade !== 'undefined' && avisoCapacidade) avisoCapacidade.textContent = "";
                 } else {
                     alert("Erro do Servidor: " + resultado.mensagem);
                     btnConfirmar.disabled = false;
@@ -283,6 +297,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         document.getElementById("fechar-modal-sucesso").addEventListener("click", () => {
             modalOverlay.remove();
+            window.location.href = "minhas_reservas.php"; // Redireciona o cliente para visualizar a reserva listada
         });
     }
 });
