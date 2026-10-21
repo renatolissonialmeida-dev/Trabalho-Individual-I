@@ -1,19 +1,37 @@
 <?php
 if (session_status() === PHP_SESSION_NONE) {
+    session_set_cookie_params([
+        'lifetime' => 0,
+        'path'     => '/',
+        'httponly' => true,
+        'samesite' => 'Lax'
+    ]);
     session_start();
 }
 
-// Se NÃO estiver logado, redireciona imediatamente para o login
+// 1. Redireciona se NÃO estiver logado
 if (!isset($_SESSION['usuario_id'])) {
     header("Location: login.php");
     exit;
+}
+
+// 2. Trava de perfil: Impedir que colaboradores ou administradores acessem o formulário de candidatura
+$perfilAtual = $_SESSION['perfil'] ?? '';
+if ($perfilAtual === 'funcionario' || $perfilAtual === 'admin') {
+    header("Location: home.php");
+    exit;
+}
+
+// 3. Gera o Token CSRF se ainda não existir
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Trabalhe no Freddy Fazbear's Mega Pizzaplex! Vagas abertas para guarda noturno, atendente de creche e técnicos em robótica. Candidate-se agora.">
     <title>Contratação | Fazbear Entertainment</title>
     <link rel="stylesheet" href="assets/geral.css"/>
@@ -21,10 +39,12 @@ if (!isset($_SESSION['usuario_id'])) {
 </head>
 
 <body>
+    <!-- Campo oculto para envio do Token CSRF via JavaScript -->
+    <input type="hidden" id="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+
     <header>
         <a href="home.php" class="logo-link">
             <figure>
-                <!-- Logo da empresa -->
                 <img src="imagens/logo_branca.webp" alt="Logo empresarial" width="100">
             </figure>
             <h1>Fazbear Entertainment</h1>
@@ -48,41 +68,41 @@ if (!isset($_SESSION['usuario_id'])) {
             <a href="novidade.php" style="text-align: center; line-height: 1.2;">O Mega Pizzaplex</a>
 
             <?php
-            // Inicia a sessão no PHP se ainda não estiver aberta
             if (session_status() === PHP_SESSION_NONE) {
                 session_start();
             }
 
-            // Oculta as abas "Reservar festa" e "Contratação" se o utilizador for um funcionário
-            if (!isset($_SESSION['perfil']) || $_SESSION['perfil'] !== 'funcionario') {
+            $perfilAtual = isset($_SESSION['perfil']) ? $_SESSION['perfil'] : 'visitante';
+
+            // Oculta as abas "Reservar festa" e "Contratação" de funcionários e admins
+            if ($perfilAtual === 'visitante' || $perfilAtual === 'cliente') {
                 echo '<a href="reserva.php" style="text-align: center; line-height: 1.2;">Reservar festa</a>';
                 echo '<a href="vagas.php" style="text-align: center; line-height: 1.2;">Contratação</a>';
             }
 
-            // Se houver um utilizador autenticado na sessão:
             if (isset($_SESSION['usuario_id'])) {
                 
-                if ($_SESSION['perfil'] === 'cliente') {
+                // Renderiza links específicos por perfil
+                if ($perfilAtual === 'cliente') {
                     echo '<a href="minhas_reservas.php" class="link-perfil" style="text-align: center; line-height: 1.2;">Minhas Reservas</a>';
-                } elseif ($_SESSION['perfil'] === 'funcionario') {
+                } elseif ($perfilAtual === 'funcionario') {
                     echo '<a href="banco_horas.php" class="link-perfil" style="text-align: center; line-height: 1.2;">Banco de Horas</a>';
+                } elseif ($perfilAtual === 'admin') {
+                    echo '<a href="painel_rh.php" class="link-perfil" style="text-align: center; line-height: 1.2;">Painel do RH</a>';
+                    echo '<a href="arquivos_confidenciais.php" class="link-perfil" style="text-align: center; line-height: 1.2;">Arquivos Confidenciais</a>';
                 }
                 
-                // Resgata o nome da sessão corretamente
                 $nomeCompleto = isset($_SESSION['usuario_nome']) ? $_SESSION['usuario_nome'] : 'Visitante';
                 $primeiroNome = explode(' ', trim($nomeCompleto))[0]; 
 
-                // Renderiza o Nome e o Botão de Sair empilhados
                 echo '<div class="user-logout-container" style="display: flex; flex-direction: column; align-items: center; gap: 4px; margin-left: 15px;">';
                 echo '<span style="font-size: 0.85rem; color: var(--cor-dourada, #e6b800); font-weight: bold;">Olá, ' . htmlspecialchars($primeiroNome, ENT_QUOTES, 'UTF-8') . '</span>';
                 
-                // Criamos um estilo rápido e invisível só para esse botão conseguir ter o efeito :hover
                 echo '<style>
                         .btn-sair-vermelho { background-color: #b5382a !important; color: #ffffff !important; }
                         .btn-sair-vermelho:hover { background-color: var(--cor-dourada, #e6b800) !important; color: #000000 !important; }
                     </style>';
                 
-                // Removemos a cor do 'style' e passamos a usar a nossa classe nova 'btn-sair-vermelho'
                 echo '<a href="../backend/controllers/logoutController.php" class="btn-login btn-sair-vermelho" style="text-align: center; margin: 0; padding: 6px 16px; line-height: 1.2;">Sair</a>';
                 echo '</div>';
 
@@ -118,8 +138,7 @@ if (!isset($_SESSION['usuario_id'])) {
         <section id="formulario-vagas">
             <h3>Formulário de Candidatura</h3>
 
-            <form action="/painel/candidaturas" method="POST">
-      
+            <form id="form-candidatura-fazbear">
                 <!-- Grupo 1: Dados de Contato -->
                 <fieldset>
                     <legend><b>1. Dados Pessoais e Contato</b></legend>
@@ -150,20 +169,20 @@ if (!isset($_SESSION['usuario_id'])) {
                         <label for="cargo">Qual vaga você deseja disputar?</label><br />
                         <select id="cargo" name="cargo" required>
                             <option value="" disabled selected>-- Selecione um cargo --</option>
-                            <option value="seguranca">Guarda Noturno Chefe</option>
-                            <option value="creche">Atendente da Creche (Tolerância a escuro exigida)</option>
-                            <option value="tecnico">Técnico em Robótica (Glamrocks e S.T.A.F.F. Bots)</option>
-                            <option value="faxineiro">Faxineiro (Saiba limpar manchas difíceis e sangue)</option>
-                            <option value="cozinheiro">Cozinheiro de Pizzas Automático</option>
+                            <option value="Guarda Noturno Chefe">Guarda Noturno Chefe</option>
+                            <option value="Atendente da Creche">Atendente da Creche (Tolerância a escuro exigida)</option>
+                            <option value="Técnico em Robótica">Técnico em Robótica (Glamrocks e S.T.A.F.F. Bots)</option>
+                            <option value="Faxineiro">Faxineiro (Saiba limpar manchas difíceis e sangue)</option>
+                            <option value="Cozinheiro de Pizzas">Cozinheiro de Pizzas Automático</option>
                         </select>
                     </p>
 
                     <p>
                         <label>Turno de Preferência:</label><br />
-                        <input type="radio" id="diurno" name="turno" value="diurno" />
+                        <input type="radio" id="diurno" name="turno" value="Diurno (08:00 - 16:00)" />
                         <label for="diurno">Diurno (08:00 às 16:00)</label><br />
 
-                        <input type="radio" id="noturno" name="turno" value="noturno" checked />
+                        <input type="radio" id="noturno" name="turno" value="Noturno (00:00 - 06:00)" checked />
                         <label for="noturno">Noturno / Madrugada (00:00 às 06:00 - Adicional Noturno)</label>
                     </p>
 
@@ -194,19 +213,14 @@ if (!isset($_SESSION['usuario_id'])) {
     </main>
 
     <footer class="site-footer">
-        <!-- Topo do Footer (Logo) -->
         <a href="home.php" class="footer-top logo-container logo-link">
             <img src="imagens/logo_branca.webp" alt="Logo Fazbear" class="footer-icon">
             <h2 class="footer-logo-text">Fazbear<br>Entertainment</h2>
         </a>
 
-        <!-- Linha Divisória -->
         <hr class="footer-divider" />
 
-        <!-- Colunas de Informação -->
         <div class="footer-grid">
-            
-            <!-- Coluna 1: Localização e Horários (Igual a referência) -->
             <div class="footer-col">
                 <h3>Nossa Localização</h3>
                 <p>1987 Hurricane, Utah<br>
@@ -220,7 +234,6 @@ if (!isset($_SESSION['usuario_id'])) {
                 <b>Dom:</b> 11:00 AM - 21:00 PM</p>
             </div>
 
-            <!-- Coluna 2: "Aba" de navegação-->
             <div class="footer-col">
                 <h3>Acesso Rápido</h3>
                 <ul>
@@ -237,7 +250,6 @@ if (!isset($_SESSION['usuario_id'])) {
                 </ul>
             </div>
 
-            <!-- Coluna 3: Informações do Projeto -->
             <div class="footer-col">
                 <h3>Sobre o Projeto</h3>
                 <ul>
@@ -248,7 +260,6 @@ if (!isset($_SESSION['usuario_id'])) {
                 </ul>
             </div>
 
-            <!-- Coluna 4: Fontes -->
             <div class="footer-col">
                 <h3>Fontes e Referências</h3>
                 <ul>
@@ -257,10 +268,8 @@ if (!isset($_SESSION['usuario_id'])) {
                     <li><a href="https://commons.wikimedia.org/" target="_blank">Wikimedia Commons</a></li>
                 </ul>
             </div>
-
         </div>
 
-        <!-- O aviso legal macabro lá no finalzinho -->
         <div class="footer-bottom">
             <p><small>&copy; 2026 Fazbear Entertainment. O desaparecimento de clientes dentro do shopping não é de nossa responsabilidade.</small></p>
         </div>

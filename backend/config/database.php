@@ -25,7 +25,7 @@ class Database {
                 header('Content-Type: application/json');
                 echo json_encode([
                     'sucesso' => false,
-                    'mensagem' => 'Erro de conexão com o banco de dados: ' . $e->getMessage()
+                    'mensagem' => 'Indisponibilidade temporária nos servidores do banco de dados.'
                 ]);
                 exit;
             }

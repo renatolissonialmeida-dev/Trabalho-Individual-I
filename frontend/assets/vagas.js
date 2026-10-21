@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const formVagas = document.querySelector("#formulario-vagas form");
+    const formVagas = document.getElementById("form-candidatura-fazbear");
     if (!formVagas) return;
 
     const inputNome = document.getElementById("nome");
@@ -7,7 +7,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const selectCargo = document.getElementById("cargo");
     const inputExperiencia = document.getElementById("experiencia");
     const radioNoturno = document.getElementById("noturno");
-    const btnSubmitVagas = formVagas.querySelector("button[type='submit']");
 
     // Máscara de Telefone
     if (inputTelVagas) {
@@ -36,11 +35,11 @@ document.addEventListener("DOMContentLoaded", () => {
     selectCargo.parentNode.appendChild(avisoCargo);
 
     const detalhesCargos = {
-        creche: { texto: "☀️/🌙 Atenção: Mantenha as luzes acesas a todo custo para evitar ativação do modo noturno.", cor: "#f39c12" },
-        seguranca: { texto: "🔦 Nota: Lanterna oficial fornecida. Baterias sobressalentes devem ser adquiridas por conta própria.", cor: "#e74c3c" },
-        tecnico: { texto: "⚙️ Cuidado: Animatrônicos em manutenção podem se mover sozinhos durante a noite.", cor: "#e6b800" },
-        faxineiro: { texto: "🧹 Obs: Kit de limpeza especial para manchas orgânicas profundas disponível no Depósito B.", cor: "#3498db" },
-        cozinheiro: { texto: "🍕 Obs: Supervisão contínua exigida. Cuidado para não cair nos fornos automatizados.", cor: "#2ecc71" }
+        "Atendente da Creche": { texto: "☀️/🌙 Atenção: Mantenha as luzes acesas a todo custo para evitar ativação do modo noturno.", cor: "#f39c12" },
+        "Guarda Noturno Chefe": { texto: "🔦 Nota: Lanterna oficial fornecida. Baterias sobressalentes devem ser adquiridas por conta própria.", cor: "#e74c3c" },
+        "Técnico em Robótica": { texto: "⚙️ Cuidado: Animatrônicos em manutenção podem se mover sozinhos durante a noite.", cor: "#e6b800" },
+        "Faxineiro": { texto: "🧹 Obs: Kit de limpeza especial para manchas orgânicas profundas disponível no Depósito B.", cor: "#3498db" },
+        "Cozinheiro de Pizzas": { texto: "🍕 Obs: Supervisão contínua exigida. Cuidado para não cair nos fornos automatizados.", cor: "#2ecc71" }
     };
 
     selectCargo.addEventListener("change", () => {
@@ -53,50 +52,24 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // Easter Eggs de Candidatos
-    inputNome.addEventListener("blur", () => {
-        const nome = inputNome.value.toLowerCase();
-        if (nome.includes("michael") || nome.includes("mike")) {
-            mostrarToast("🔧 'Bem-vindo de volta, Afton. Quantas vezes você pretende se candidatar?'");
-        } else if (nome.includes("vanessa") || nome.includes("vanny")) {
-            mostrarToast("🔦 'Credencial de Segurança Nível 3 identificada. Status: Sob vigilância.'");
-        } else if (nome.includes("phone guy") || nome.includes("cara do telefone")) {
-            mostrarToast("📞 'Hello, hello? Uh, I wanted to record a message for you to help you get settled...'");
-        } else if (nome.includes("william") || nome.includes("afton") || nome.includes("purple guy")) {
-            mostrarToast("🟣 [SISTEMA PHANTOM]: 'I ALWAYS COME BACK.' — Candidatura enviada para o RH Central.");
-        }
-    });
-
-    inputExperiencia.addEventListener("blur", () => {
-        const texto = inputExperiencia.value.toLowerCase();
-        if (texto.includes("reporter") || texto.includes("jornalista") || texto.includes("investigacao")) {
-            mostrarToast("⚠️ [ALERTA DE SEGURANÇA RH]: Candidato marcado como potencial risco de vazamento de mídia.");
-        }
-    });
-
-    // ========================================================
-    // 3. EVENTO ASSÍNCRONO DA CANDIDATURA (2 ETAPAS + PHP/BANCO)
-    // ========================================================
+    // Submissão com envio de CSRF Token
     formVagas.addEventListener("submit", (e) => {
         e.preventDefault();
 
         const turnoSelecionado = radioNoturno.checked ? "Noturno (00:00 - 06:00)" : "Diurno (08:00 - 16:00)";
 
-        // Adicionando a experiência que faltava e o email para exibição
         const dadosCandidato = {
             nome: inputNome.value,
             email: document.getElementById("email").value,
             telefone: inputTelVagas.value,
-            cargo: selectCargo.options[selectCargo.selectedIndex].text,
+            cargo: selectCargo.value,
             turno: turnoSelecionado,
-            experiencia: inputExperiencia.value || "Nenhuma experiência prévia informada."
+            experiencia: inputExperiencia.value || "Sem experiência prévia informada."
         };
 
-        // Chama o modal de revisão (ETAPA 1)
         exibirModalRevisaoVaga(dadosCandidato);
     });
 
-    // Modal de Revisão antes do Envio Real
     function exibirModalRevisaoVaga(dados) {
         const modalExistente = document.querySelector(".modal-overlay-fazbear");
         if (modalExistente) modalExistente.remove();
@@ -117,7 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     <p><strong>Vaga Pretendida:</strong> ${dados.cargo}</p>
                     <p><strong>Turno:</strong> ${dados.turno}</p>
                     <p><strong>Experiência:</strong> ${dados.experiencia}</p>
-                    <hr>
+                    <hr style="border:0; border-top: 1px solid rgba(255,255,255,0.1); margin: 10px 0;">
                     <p><small>Confira os dados antes de enviar sua ficha ao banco de dados do RH.</small></p>
                 </div>
                 <div style="display: flex; gap: 10px; justify-content: center; margin-top: 15px;">
@@ -129,27 +102,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
         document.body.appendChild(modalOverlay);
 
-        // Ação do Botão VOLTAR
-        document.getElementById("btn-voltar-vaga").addEventListener("click", () => {
-            modalOverlay.remove();
-        });
+        document.getElementById("btn-voltar-vaga").addEventListener("click", () => modalOverlay.remove());
 
-        // Ação do Botão CONFIRMAR (ETAPA 2: Envio para o PHP/Banco)
         document.getElementById("btn-confirmar-vaga").addEventListener("click", async () => {
             const btnConfirmar = document.getElementById("btn-confirmar-vaga");
             btnConfirmar.disabled = true;
             btnConfirmar.innerHTML = "⏳ Enviando ao RH...";
 
-            // O laço de repetição que falamos antes, adicionando todos os campos automaticamente
+            const tokenCsrf = document.getElementById("csrf_token").value;
             const formData = new FormData();
+            formData.append("csrf_token", tokenCsrf);
+
             for (let chave in dados) {
                 formData.append(chave, dados[chave]);
             }
 
             try {
-                // Requisição Real para a API PHP de Vagas
-                const resposta = await fetch('../backend/controllers/vagasController.php', {
-                    method: 'POST',
+                const resposta = await fetch("../backend/controllers/vagasController.php", {
+                    method: "POST",
+                    credentials: "same-origin",
                     body: formData
                 });
 
@@ -159,44 +130,45 @@ document.addEventListener("DOMContentLoaded", () => {
                     modalOverlay.remove();
                     exibirModalCracha(resultado.matricula, dados);
                     formVagas.reset();
-                    if (typeof avisoCargo !== 'undefined') avisoCargo.textContent = "";
+                    if (typeof avisoCargo !== "undefined") avisoCargo.textContent = "";
                 } else {
                     alert("Erro do Servidor: " + resultado.mensagem);
                     btnConfirmar.disabled = false;
                     btnConfirmar.innerHTML = "Confirmar e Enviar";
                 }
             } catch (erro) {
-                alert("Erro ao conectar com o sistema de recrutamento do Pizzaplex. O XAMPP está ligado?");
-                console.error(erro);
+                alert("Erro ao conectar com o sistema de recrutamento.");
                 btnConfirmar.disabled = false;
                 btnConfirmar.innerHTML = "Confirmar e Enviar";
             }
         });
     }
 
-    // Modal Final de Sucesso (Matrícula Gerada pelo Banco)
     function exibirModalCracha(matricula, candidato) {
         const modalOverlay = document.createElement("div");
         modalOverlay.className = "modal-overlay-fazbear";
         modalOverlay.innerHTML = `
-            <div class="modal-card-fazbear">
+            <div class="modal-card-fazbear" style="text-align: center;">
                 <div class="modal-header-fazbear">
                     <h3>📋 CANDIDATURA REGISTRADA!</h3>
                     <p>Fazbear Entertainment — Recursos Humanos</p>
                 </div>
                 <div class="modal-body-fazbear">
-                    <p class="codigo-destaque">Matrícula no Banco: <strong>${matricula}</strong></p>
-                    <hr>
+                    <p style="font-size: 1.2rem; color: #d4af37; margin-bottom: 10px;">Matrícula no Banco: <strong>${matricula}</strong></p>
+                    <hr style="border:0; border-top: 1px solid rgba(255,255,255,0.1); margin: 10px 0;">
                     <p><strong>Candidato:</strong> ${candidato.nome}</p>
                     <p><strong>Vaga Pretendida:</strong> ${candidato.cargo}</p>
                     <p><strong>Turno Escolhido:</strong> ${candidato.turno}</p>
-                    <hr>
-                    <p class="aviso-rodape"><small>Seu termo de isenção de responsabilidade foi arquivado com sucesso no banco de dados. Apresente este número no setor de RH.</small></p>
+                    <hr style="border:0; border-top: 1px solid rgba(255,255,255,0.1); margin: 10px 0;">
+                    <p><small>Sua ficha foi enviada com sucesso para a diretoria. Guarde seu número de matrícula e aguarde o retorno do RH no seu e-mail.</small></p>
                 </div>
-                <button id="fechar-modal-cracha" class="btn-fechar-modal" style="margin-top: 15px;">Entendido</button>
+                <button id="fechar-modal-cracha" style="margin-top: 15px; background-color: #9e1b1b; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold;">Voltar ao Início</button>
             </div>
         `;
         document.body.appendChild(modalOverlay);
-        document.getElementById("fechar-modal-cracha").addEventListener("click", () => modalOverlay.remove());
+        document.getElementById("fechar-modal-cracha").addEventListener("click", () => {
+            modalOverlay.remove();
+            window.location.href = "home.php";
+        });
     }
 });

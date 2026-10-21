@@ -29,7 +29,7 @@ if (empty($acao)) {
 $pdo = Database::getConnection();
 
 // ========================================================
-// 1. CADASTRO (Com identificação automática de e-mail corporativo)
+// 1. CADASTRO (Com identificação automática de e-mail corporativo / admin)
 // ========================================================
 if ($acao === 'cadastrar') {
     $nome  = trim($_POST['nome'] ?? '');
@@ -49,8 +49,18 @@ if ($acao === 'cadastrar') {
         exit;
     }
 
-    // REGRA DO E-MAIL: Se tiver @fazbear.com vira funcionário, senão vira cliente
-    $perfil = (strpos(strtolower($email), '@fazbear.com') !== false) ? 'funcionario' : 'cliente';
+    // REGRAS DE PERFIL POR E-MAIL:
+    // - @admin.com    => 'admin'
+    // - @fazbear.com  => 'funcionario'
+    // - Outros        => 'cliente'
+    $emailLower = strtolower($email);
+    if (strpos($emailLower, '@admin.com') !== false) {
+        $perfil = 'admin';
+    } elseif (strpos($emailLower, '@fazbear.com') !== false) {
+        $perfil = 'funcionario';
+    } else {
+        $perfil = 'cliente';
+    }
 
     // Criptografia segura com Bcrypt
     $senhaHash = password_hash($senha, PASSWORD_BCRYPT);

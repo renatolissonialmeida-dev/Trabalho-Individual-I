@@ -130,6 +130,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const formData = new FormData();
 
+        // Captura o token CSRF do HTML e adiciona na requisição
+        const inputCsrf = document.getElementById("csrf_token");
+        if (inputCsrf) {
+            formData.append("csrf_token", inputCsrf.value);
+        }
+
         // SE FOR A PÁGINA DE CADASTRO
         if (inputNomeCad) {
             if (!validarSenhaForte(inputSenhaCad.value)) {

@@ -36,41 +36,41 @@
             <a href="novidade.php" style="text-align: center; line-height: 1.2;">O Mega Pizzaplex</a>
 
             <?php
-            // Inicia a sessão no PHP se ainda não estiver aberta
             if (session_status() === PHP_SESSION_NONE) {
                 session_start();
             }
 
-            // Oculta as abas "Reservar festa" e "Contratação" se o utilizador for um funcionário
-            if (!isset($_SESSION['perfil']) || $_SESSION['perfil'] !== 'funcionario') {
+            $perfilAtual = isset($_SESSION['perfil']) ? $_SESSION['perfil'] : 'visitante';
+
+            // Oculta as abas "Reservar festa" e "Contratação" de funcionários e admins
+            if ($perfilAtual === 'visitante' || $perfilAtual === 'cliente') {
                 echo '<a href="reserva.php" style="text-align: center; line-height: 1.2;">Reservar festa</a>';
                 echo '<a href="vagas.php" style="text-align: center; line-height: 1.2;">Contratação</a>';
             }
 
-            // Se houver um utilizador autenticado na sessão:
             if (isset($_SESSION['usuario_id'])) {
                 
-                if ($_SESSION['perfil'] === 'cliente') {
+                // Renderiza links específicos por perfil
+                if ($perfilAtual === 'cliente') {
                     echo '<a href="minhas_reservas.php" class="link-perfil" style="text-align: center; line-height: 1.2;">Minhas Reservas</a>';
-                } elseif ($_SESSION['perfil'] === 'funcionario') {
+                } elseif ($perfilAtual === 'funcionario') {
                     echo '<a href="banco_horas.php" class="link-perfil" style="text-align: center; line-height: 1.2;">Banco de Horas</a>';
+                } elseif ($perfilAtual === 'admin') {
+                    echo '<a href="painel_rh.php" class="link-perfil" style="text-align: center; line-height: 1.2;">Painel do RH</a>';
+                    echo '<a href="arquivos_confidenciais.php" class="link-perfil" style="text-align: center; line-height: 1.2;">Arquivos Confidenciais</a>';
                 }
                 
-                // Resgata o nome da sessão corretamente
                 $nomeCompleto = isset($_SESSION['usuario_nome']) ? $_SESSION['usuario_nome'] : 'Visitante';
                 $primeiroNome = explode(' ', trim($nomeCompleto))[0]; 
 
-                // Renderiza o Nome e o Botão de Sair empilhados
                 echo '<div class="user-logout-container" style="display: flex; flex-direction: column; align-items: center; gap: 4px; margin-left: 15px;">';
                 echo '<span style="font-size: 0.85rem; color: var(--cor-dourada, #e6b800); font-weight: bold;">Olá, ' . htmlspecialchars($primeiroNome, ENT_QUOTES, 'UTF-8') . '</span>';
                 
-                // Criamos um estilo rápido e invisível só para esse botão conseguir ter o efeito :hover
                 echo '<style>
                         .btn-sair-vermelho { background-color: #b5382a !important; color: #ffffff !important; }
                         .btn-sair-vermelho:hover { background-color: var(--cor-dourada, #e6b800) !important; color: #000000 !important; }
                     </style>';
                 
-                // Removemos a cor do 'style' e passamos a usar a nossa classe nova 'btn-sair-vermelho'
                 echo '<a href="../backend/controllers/logoutController.php" class="btn-login btn-sair-vermelho" style="text-align: center; margin: 0; padding: 6px 16px; line-height: 1.2;">Sair</a>';
                 echo '</div>';
 

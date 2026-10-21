@@ -9,18 +9,27 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Garante que apenas usuários logados acessem a página
+// 1. Garante que apenas usuários logados acessem a página
 if (!isset($_SESSION['usuario_id'])) {
     header("Location: login.php");
     exit;
 }
 
+// 2. Trava de perfil: Apenas clientes podem acessar esta página
+$perfilAtual = $_SESSION['perfil'] ?? '';
+if ($perfilAtual !== 'cliente') {
+    header("Location: home.php");
+    exit;
+}
+
 // Gera o token CSRF se ainda não existir
-if (empty($_SESSION['csrf_token'])) {$_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
 
 // Tenta carregar a conexão com o banco
-$reservas = [];$erroBanco = null;
+$reservas = [];
+$erroBanco = null;
 
 try {
     if (file_exists('backend/config/database.php')) {
@@ -30,25 +39,27 @@ try {
     }
     
     $pdo = Database::getConnection();
-    $stmt =$pdo->prepare("
+    $stmt = $pdo->prepare("
         SELECT * FROM reservas 
         WHERE usuario_id = ? 
         ORDER BY data_reserva DESC, horario DESC
     ");
     $stmt->execute([$_SESSION['usuario_id']]);
-    $reservas =$stmt->fetchAll(PDO::FETCH_ASSOC);
+    $reservas = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-} catch (Exception $e) {$erroBanco = "Não foi possível carregar o histórico de reservas no momento.";
+} catch (Exception $e) {
+    $erroBanco = "Não foi possível carregar o histórico de reservas no momento.";
 }
 
 // Função para formatar os nomes dos pacotes
-function formatarPacote($pacote) {$mapa = [
+function formatarPacote($pacote) {
+    $mapa = [
         'bronze' => 'Pacote Bronze (Classic)',
         'gold'   => 'Pacote Glamrock Gold',
         'vip'    => 'Pacote VIP Superstar'
     ];
     $chave = strtolower(trim($pacote));
-    return isset($mapa[$chave]) ?$mapa[$chave] :$pacote;
+    return isset($mapa[$chave]) ? $mapa[$chave] : $pacote;
 }
 ?>
 <!DOCTYPE html>
@@ -78,6 +89,7 @@ function formatarPacote($pacote) {$mapa = [
             <a href="home.php" style="text-align: center; line-height: 1.2;">Home</a>
             <a href="sobre.php" style="text-align: center; line-height: 1.2;">Sobre a empresa</a>
             
+            <!-- Menu Dropdown -->
             <div class="dropdown" style="text-align: center;">
                 <button class="dropbtn" style="text-align: center; line-height: 1.2;">Franquias</button>
                 <div class="dropdown-content" style="text-align: left;">
@@ -91,32 +103,44 @@ function formatarPacote($pacote) {$mapa = [
             <a href="novidade.php" style="text-align: center; line-height: 1.2;">O Mega Pizzaplex</a>
 
             <?php
-            $perfilUsuario = isset($_SESSION['perfil']) ?$_SESSION['perfil'] : '';
+            if (session_status() === PHP_SESSION_NONE) {
+                session_start();
+            }
 
-            if ($perfilUsuario !== 'funcionario') {
+            $perfilAtual = isset($_SESSION['perfil']) ? $_SESSION['perfil'] : 'visitante';
+
+            // Oculta as abas "Reservar festa" e "Contratação" de funcionários e admins
+            if ($perfilAtual === 'visitante' || $perfilAtual === 'cliente') {
                 echo '<a href="reserva.php" style="text-align: center; line-height: 1.2;">Reservar festa</a>';
                 echo '<a href="vagas.php" style="text-align: center; line-height: 1.2;">Contratação</a>';
             }
 
             if (isset($_SESSION['usuario_id'])) {
-                if ($perfilUsuario === 'cliente') {
+                
+                // Renderiza links específicos por perfil
+                if ($perfilAtual === 'cliente') {
                     echo '<a href="minhas_reservas.php" class="link-perfil" style="text-align: center; line-height: 1.2;">Minhas Reservas</a>';
-                }
-                if ($perfilUsuario === 'funcionario') {
+                } elseif ($perfilAtual === 'funcionario') {
                     echo '<a href="banco_horas.php" class="link-perfil" style="text-align: center; line-height: 1.2;">Banco de Horas</a>';
+                } elseif ($perfilAtual === 'admin') {
+                    echo '<a href="painel_rh.php" class="link-perfil" style="text-align: center; line-height: 1.2;">Painel do RH</a>';
+                    echo '<a href="arquivos_confidenciais.php" class="link-perfil" style="text-align: center; line-height: 1.2;">Arquivos Confidenciais</a>';
                 }
                 
-                $nomeCompleto = isset($_SESSION['usuario_nome']) ?$_SESSION['usuario_nome'] : 'Visitante';
+                $nomeCompleto = isset($_SESSION['usuario_nome']) ? $_SESSION['usuario_nome'] : 'Visitante';
                 $primeiroNome = explode(' ', trim($nomeCompleto))[0]; 
 
                 echo '<div class="user-logout-container" style="display: flex; flex-direction: column; align-items: center; gap: 4px; margin-left: 15px;">';
                 echo '<span style="font-size: 0.85rem; color: var(--cor-dourada, #e6b800); font-weight: bold;">Olá, ' . htmlspecialchars($primeiroNome, ENT_QUOTES, 'UTF-8') . '</span>';
+                
                 echo '<style>
                         .btn-sair-vermelho { background-color: #b5382a !important; color: #ffffff !important; }
                         .btn-sair-vermelho:hover { background-color: var(--cor-dourada, #e6b800) !important; color: #000000 !important; }
                     </style>';
+                
                 echo '<a href="../backend/controllers/logoutController.php" class="btn-login btn-sair-vermelho" style="text-align: center; margin: 0; padding: 6px 16px; line-height: 1.2;">Sair</a>';
                 echo '</div>';
+
             } else {
                 echo '<a href="login.php" class="btn-login" style="text-align: center; line-height: 1.2;">Login</a>';
             }

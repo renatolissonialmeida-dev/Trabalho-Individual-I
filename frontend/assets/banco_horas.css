@@ -1,0 +1,272 @@
+/* ========================================================
+   ESTILOS EXCLUSIVOS DO BANCO DE HORAS / CRACHÁS RH
+======================================================== */
+
+.resumo-painel {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+main h2 {
+    color: var(--cor-dourada, #d4af37);
+    font-size: 2.3rem;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--cor-destaque, #9e1b1b);
+    padding-bottom: 12px;
+}
+
+.subtitulo-painel {
+    text-align: center;
+    color: var(--cor-texto, #f4f4f4);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    max-width: 850px;
+    margin: 0 auto 35px auto;
+}
+
+/* Card Vazio */
+.card-vazio {
+    background-color: var(--fundo-cards, #222222);
+    border: 2px dashed var(--cor-dourada, #d4af37);
+    border-radius: 12px;
+    padding: 50px 20px;
+    text-align: center;
+    max-width: 600px;
+    margin: 40px auto;
+}
+
+.card-vazio .icone-festa {
+    font-size: 3.5rem;
+    margin-bottom: 15px;
+}
+
+.card-vazio h3 {
+    color: var(--cor-dourada, #d4af37);
+    margin-bottom: 10px;
+}
+
+.card-vazio p {
+    color: var(--cor-texto-mutado, #aaaaaa);
+    margin-bottom: 25px;
+}
+
+.btn-agendar-nova {
+    display: inline-block;
+    background-color: var(--cor-destaque, #9e1b1b);
+    color: #ffffff;
+    padding: 12px 25px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* Lista Empilhada de Crachás */
+.grid-candidaturas {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    max-width: 850px;
+    margin: 0 auto 50px auto;
+}
+
+.card-cracha {
+    width: 100%;
+    background-color: var(--fundo-cards, #222222);
+    border: 2px solid var(--cor-dourada, #d4af37);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+}
+
+.card-cracha-header {
+    background-color: var(--fundo-header, #111111);
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.matricula-badge small {
+    display: block;
+    color: var(--cor-texto-mutado, #aaaaaa);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+}
+
+.matricula-badge strong {
+    color: var(--cor-dourada, #d4af37);
+    font-size: 1.2rem;
+}
+
+.status-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: bold;
+}
+
+.status-ativo {
+    background-color: rgba(40, 167, 69, 0.2);
+    color: #4caf50;
+    border: 1px solid #4caf50;
+}
+
+.card-cracha-body {
+    padding: 20px;
+    flex: 1;
+}
+
+.destaque-cargo h4 {
+    color: var(--cor-dourada, #d4af37);
+    font-size: 1.3rem;
+    margin: 0 0 8px 0;
+    text-transform: uppercase;
+}
+
+.turno-texto {
+    color: var(--cor-texto, #f4f4f4);
+    font-size: 1rem;
+    margin: 0;
+}
+
+.card-divisor {
+    border: 0;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 15px 0;
+}
+
+.detalhes-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.detalhe-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.95rem;
+}
+
+.detalhe-item .label {
+    color: var(--cor-texto-mutado, #aaaaaa);
+}
+
+.detalhe-item .valor {
+    color: var(--cor-texto, #f4f4f4);
+    font-weight: bold;
+}
+
+.bloco-experiencia {
+    margin-top: 15px;
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 12px;
+    border-left: 3px solid var(--cor-dourada, #d4af37);
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.bloco-experiencia strong {
+    color: var(--cor-dourada, #d4af37);
+    display: block;
+    margin-bottom: 4px;
+}
+
+.bloco-experiencia p {
+    margin: 0;
+    color: var(--cor-texto-mutado, #aaaaaa);
+}
+
+.card-cracha-footer {
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.acoes-card {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-acao {
+    padding: 6px 14px;
+    border-radius: 5px;
+    border: none;
+    font-size: 0.85rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-editar {
+    background-color: #f39c12;
+    color: #000000;
+}
+
+.btn-cancelar {
+    background-color: #b5382a;
+    color: #ffffff;
+}
+
+/* Modais de Edição e Deleção */
+.modal-overlay-fazbear {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.modal-card-fazbear {
+    background-color: var(--fundo-cards, #222222);
+    border: 2px solid var(--cor-dourada, #d4af37);
+    border-radius: 12px;
+    padding: 25px;
+    width: 100%;
+    max-width: 550px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+    color: var(--cor-texto, #f4f4f4);
+}
+
+.modal-header-fazbear h3 {
+    color: var(--cor-dourada, #d4af37);
+    margin: 0 0 8px 0;
+    font-size: 1.4rem;
+    text-transform: uppercase;
+}
+
+.modal-header-fazbear p {
+    color: var(--cor-texto-mutado, #aaaaaa);
+    margin: 0 0 15px 0;
+    font-size: 0.9rem;
+}
+
+.modal-card-fazbear input,
+.modal-card-fazbear select,
+.modal-card-fazbear textarea {
+    background-color: #111111;
+    color: #ffffff;
+    border: 1px solid var(--cor-dourada, #d4af37);
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 0.95rem;
+    box-sizing: border-box;
+}
