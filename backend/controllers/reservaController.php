@@ -1,38 +1,28 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_set_cookie_params([
-        'lifetime' => 0,
-        'path'     => '/',
-        'httponly' => true,
-        'samesite' => 'Lax'
-    ]);
-    session_start();
-}
-
+if (session_status() === PHP_SESSION_NONE) { session_start(); }
 header('Content-Type: application/json');
 require_once '../config/database.php';
+require_once '../config/logger.php';
 
-// 1. Valida se o usuário está logado
 if (!isset($_SESSION['usuario_id'])) {
-    echo json_encode(['sucesso' => false, 'mensagem' => 'Sessão expirada. Faça login novamente.']);
+    http_response_code(401);
+    echo json_encode(['sucesso' => false, 'mensagem' => 'Sessão expirada.']);
     exit;
 }
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    echo json_encode(['sucesso' => false, 'mensagem' => 'Método de requisição inválido.']);
+    http_response_code(405);
+    echo json_encode(['sucesso' => false, 'mensagem' => 'Método inválido.']);
     exit;
 }
 
-// 2. Proteção CSRF
 $tokenRecebido = $_POST['csrf_token'] ?? '';
-$tokenSessao   = $_SESSION['csrf_token'] ?? '';
-
-if (empty($tokenRecebido) || empty($tokenSessao) || !hash_equals($tokenSessao, $tokenRecebido)) {
-    echo json_encode(['sucesso' => false, 'mensagem' => 'Falha de validação de segurança (Token CSRF inválido).']);
+if (empty($tokenRecebido) || !hash_equals($_SESSION['csrf_token'] ?? '', $tokenRecebido)) {
+    http_response_code(401);
+    echo json_encode(['sucesso' => false, 'mensagem' => 'Falha CSRF.']);
     exit;
 }
 
-// 3. Captura dos dados do formulário
 $usuarioId      = $_SESSION['usuario_id'];
 $responsavel    = trim($_POST['responsavel'] ?? '');
 $email          = trim($_POST['email'] ?? '');
@@ -45,48 +35,28 @@ $aniversariante = trim($_POST['aniversariante'] ?? '');
 $observacoes    = trim($_POST['observacoes'] ?? '');
 
 if (empty($responsavel) || empty($email) || empty($telefone) || empty($pacote) || empty($data) || empty($horario) || empty($aniversariante) || !$convidados) {
-    echo json_encode(['sucesso' => false, 'mensagem' => 'Preencha todos os campos obrigatórios da reserva.']);
+    http_response_code(400);
+    echo json_encode(['sucesso' => false, 'mensagem' => 'Preencha os campos.']);
     exit;
 }
 
-// Genera um código de reserva exclusivo
 $codigoReserva = 'FZB-' . rand(10000, 99999);
 
 try {
     $pdo = Database::getConnection();
-
-    // Mapeamento idêntico às colunas da imagem do phpMyAdmin
-    $stmt = $pdo->prepare("
-        INSERT INTO reservas 
-        (usuario_id, codigo_reserva, nome_responsavel, email, telefone, pacote, data_reserva, horario, convidados, aniversariante, observacoes) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    ");
-
-    $executou = $stmt->execute([
-        $usuarioId,
-        $codigoReserva,
-        $responsavel,
-        $email,
-        $telefone,
-        $pacote,
-        $data,
-        $horario,
-        $convidados,
-        $aniversariante,
-        $observacoes
-    ]);
-
-    if ($executou) {
-        echo json_encode([
-            'sucesso'       => true, 
-            'codigoReserva' => $codigoReserva,
-            'mensagem'      => 'Reserva registrada com sucesso!'
-        ]);
+    $stmt = $pdo->prepare("INSERT INTO reservas (usuario_id, codigo_reserva, nome_responsavel, email, telefone, pacote, data_reserva, horario, convidados, aniversariante, observacoes) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    
+    if ($stmt->execute([$usuarioId, $codigoReserva, $responsavel, $email, $telefone, $pacote, $data, $horario, $convidados, $aniversariante, $observacoes])) {
+        
+        registrarLog("Nova entidade: Reserva $codigoReserva criada pelo Usuario ID $usuarioId.");
+        http_response_code(201);
+        echo json_encode(['sucesso' => true, 'codigoReserva' => $codigoReserva, 'mensagem' => 'Registrada com sucesso!']);
     } else {
-        echo json_encode(['sucesso' => false, 'mensagem' => 'Erro ao salvar reserva no banco de dados.']);
+        http_response_code(500);
+        echo json_encode(['sucesso' => false, 'mensagem' => 'Erro ao salvar.']);
     }
-
 } catch (PDOException $e) {
-    echo json_encode(['sucesso' => false, 'mensagem' => 'Erro no servidor: ' . $e->getMessage()]);
+    registrarLog("Erro interno (Reserva): " . $e->getMessage());
+    http_response_code(500);
+    echo json_encode(['sucesso' => false, 'mensagem' => 'Erro no servidor.']);
 }
-exit;

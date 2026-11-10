@@ -1,24 +1,19 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_set_cookie_params([
-        'lifetime' => 0,
-        'path'     => '/',
-        'httponly' => true,
-        'samesite' => 'Lax'
-    ]);
-    session_start();
-}
+if (session_status() === PHP_SESSION_NONE) { session_start(); }
 
 header('Content-Type: application/json');
 require_once '../config/database.php';
+require_once '../config/logger.php'; // <--- LOGGER IMPORTADO
 
 // 1. Validação de autenticação
 if (!isset($_SESSION['usuario_id'])) {
+    http_response_code(401);
     echo json_encode(['sucesso' => false, 'mensagem' => 'Sessão expirada. Faça login novamente.']);
     exit;
 }
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    http_response_code(405);
     echo json_encode(['sucesso' => false, 'mensagem' => 'Método de requisição inválido.']);
     exit;
 }
@@ -28,6 +23,8 @@ $tokenRecebido = $_POST['csrf_token'] ?? '';
 $tokenSessao   = $_SESSION['csrf_token'] ?? '';
 
 if (empty($tokenRecebido) || empty($tokenSessao) || !hash_equals($tokenSessao, $tokenRecebido)) {
+    registrarLog("Falha de segurança: Token CSRF inválido na edição de reserva (Usuário ID: {$_SESSION['usuario_id']}).");
+    http_response_code(401);
     echo json_encode(['sucesso' => false, 'mensagem' => 'Falha de segurança CSRF.']);
     exit;
 }
@@ -46,6 +43,7 @@ $aniversariante = trim($_POST['aniversariante'] ?? '');
 $observacoes    = trim($_POST['observacoes'] ?? '');
 
 if (empty($codigoReserva) || empty($responsavel) || empty($email) || empty($telefone) || empty($pacote) || empty($data) || empty($horario) || empty($aniversariante) || !$convidados) {
+    http_response_code(400);
     echo json_encode(['sucesso' => false, 'mensagem' => 'Preencha todos os campos obrigatórios.']);
     exit;
 }
@@ -53,7 +51,6 @@ if (empty($codigoReserva) || empty($responsavel) || empty($email) || empty($tele
 try {
     $pdo = Database::getConnection();
 
-    // UPDATE no MySQL garantindo a posse do usuario_id
     $stmt = $pdo->prepare("
         UPDATE reservas 
         SET nome_responsavel = ?, email = ?, telefone = ?, pacote = ?, data_reserva = ?, horario = ?, convidados = ?, aniversariante = ?, observacoes = ?
@@ -61,26 +58,21 @@ try {
     ");
 
     $executou = $stmt->execute([
-        $responsavel,
-        $email,
-        $telefone,
-        $pacote,
-        $data,
-        $horario,
-        $convidados,
-        $aniversariante,
-        $observacoes,
-        $codigoReserva,
-        $usuarioId
+        $responsavel, $email, $telefone, $pacote, $data, $horario, $convidados, $aniversariante, $observacoes, $codigoReserva, $usuarioId
     ]);
 
-    if ($executou) {
+    if ($executou && $stmt->rowCount() > 0) {
+        registrarLog("Atualização: Reserva $codigoReserva editada pelo Usuário ID $usuarioId.");
+        http_response_code(200);
         echo json_encode(['sucesso' => true, 'mensagem' => 'Reserva atualizada com sucesso!']);
     } else {
+        http_response_code(200); // 200 porque deu certo, apenas não mudou nada visualmente
         echo json_encode(['sucesso' => false, 'mensagem' => 'Nenhuma alteração foi realizada.']);
     }
 
 } catch (PDOException $e) {
+    registrarLog("Erro interno (Editar Reserva): " . $e->getMessage());
+    http_response_code(500);
     echo json_encode(['sucesso' => false, 'mensagem' => 'Erro no servidor: ' . $e->getMessage()]);
 }
 exit;
