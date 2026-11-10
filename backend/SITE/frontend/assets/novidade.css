@@ -1,0 +1,272 @@
+/* ========================================================
+   1. ESTRUTURA PRINCIPAL
+======================================================== */
+main {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 0 20px;
+    color: var(--cor-texto);
+}
+
+/* ========================================================
+   2. TÍTULOS
+======================================================== */
+main h2 {
+    color: var(--cor-dourada);
+    font-size: 2.5rem;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 40px;
+    border-bottom: 2px solid var(--cor-destaque);
+    padding-bottom: 10px;
+}
+
+main h3 {
+    color: var(--cor-dourada);
+    font-size: 1.5rem;
+    margin-top: 35px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* ========================================================
+   3. GALERIA DE ATRAÇÕES
+======================================================== */
+.galeria-expansivel {
+    display: flex;
+    width: 100%;
+    height: 450px;
+    gap: 15px;
+    margin: 50px 0;
+}
+
+.painel {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 12px;
+    flex: 0.5; /* Mantém os painéis fininhos por padrão */
+    position: relative;
+    transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1); /* Animação suave */
+    cursor: pointer;
+    border: 2px solid var(--cor-dourada);
+    overflow: hidden;
+}
+
+.painel h4 {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    margin: 0;
+    opacity: 0; /* Esconde o texto inicialmente */
+    color: var(--cor-texto);
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    background-color: rgba(17, 17, 17, 0.8); /* Fundo escuro para leitura */
+    padding: 10px 15px;
+    border-left: 4px solid var(--cor-destaque);
+    border-radius: 4px;
+    transition: opacity 0.5s ease 0.3s; /* Atrasa o texto para aparecer depois da imagem */
+}
+
+/* O QUE ACONTECE AO PASSAR O MOUSE */
+.painel:hover {
+    flex: 4; /* O painel cresce e toma conta do espaço */
+    border-color: var(--cor-destaque);
+    box-shadow: 0 0 20px rgba(158, 27, 27, 0.5);
+}
+
+.painel:hover h4 {
+    opacity: 1; /* O texto aparece */
+}
+
+/* ========================================================
+   4. TEXTOS, LISTAS E CÓDIGO
+======================================================== */
+article {
+    margin-bottom: 40px;
+    line-height: 1.7;
+    font-size: 1.05rem;
+}
+
+article ul, article ol {
+    margin: 15px 0 20px 25px;
+    line-height: 1.8;
+}
+
+article li {
+    margin-bottom: 8px;
+}
+
+/* Formatação do comando de terminal (tag code) */
+code {
+    background-color: var(--fundo-header);
+    color: var(--cor-dourada);
+    font-family: 'Courier New', Courier, monospace;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 1px solid var(--cor-texto-mutado);
+}
+
+blockquote {
+    background-color: var(--fundo-cards);
+    border-left: 4px solid var(--cor-destaque);
+    margin: 25px 0;
+    padding: 15px 20px;
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* ========================================================
+   5. TABELA DE STATUS DOS ANIMATRONICS (PAINEL)
+======================================================== */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 30px 0;
+    background-color: var(--fundo-cards);
+    border: 2px solid var(--cor-dourada);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+caption {
+    caption-side: bottom;
+    margin-top: 10px;
+    color: var(--cor-texto-mutado);
+    font-style: italic;
+    font-size: 0.9rem;
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+th {
+    /* Fundo levemente dourado para o cabeçalho */
+    background-color: rgba(212, 175, 55, 0.15); 
+    color: var(--cor-dourada);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+tr:hover {
+    background-color: rgba(255, 255, 255, 0.05); 
+}
+
+/* ========================================================
+   6. GALERIA DE ANIMATRONICS (CSS GRID)
+======================================================== */
+.galeria-animatronics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    margin: 30px 0 60px 0;
+}
+
+.card-animatronic {
+    background-color: var(--fundo-cards);
+    border: 2px solid var(--cor-dourada);
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.card-animatronic img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1; /* Deixa as imagens quadradas */
+    object-fit: cover; /* Evita que a imagem estique ou amasse */
+    border-radius: 6px;
+    margin-bottom: 15px;
+}
+
+.card-animatronic h4 {
+    color: var(--cor-texto);
+    margin: 0;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+}
+
+/* Efeito ao passar o mouse (Hover) */
+.card-animatronic:hover {
+    transform: translateY(-5px); /* Dá um pulinho para cima */
+    border-color: var(--cor-destaque);
+    box-shadow: 0 8px 20px rgba(158, 27, 27, 0.4);
+}
+
+.card-animatronic:hover h4 {
+    color: var(--cor-destaque);
+}
+
+/* ========================================================
+   7. AVISO DE MANUTENÇÃO (ASIDE)
+======================================================== */
+aside {
+    /* Fundo de listras de perigo usando as cores corporativas */
+    background: repeating-linear-gradient(
+        45deg,
+        rgba(158, 27, 27, 0.15),
+        rgba(158, 27, 27, 0.15) 10px,
+        var(--fundo-cards) 10px,
+        var(--fundo-cards) 20px
+    );
+    border: 2px solid var(--cor-destaque);
+    border-left: 8px solid var(--cor-destaque);
+    padding: 20px;
+    margin: 30px 0;
+    border-radius: 4px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+aside h3 {
+    color: var(--cor-destaque);
+    margin-top: 0;
+}
+
+/* ========================================================
+   8. GLOSSÁRIO DE SISTEMAS (DL, DT, DD)
+======================================================== */
+dl {
+    background-color: var(--fundo-cards);
+    padding: 20px;
+    border-radius: 8px;
+    border-left: 4px solid var(--cor-dourada);
+}
+
+dt {
+    color: var(--cor-dourada);
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-top: 15px;
+}
+
+dt:first-child {
+    margin-top: 0;
+}
+
+dd {
+    margin-left: 0;
+    margin-bottom: 15px;
+    color: var(--cor-texto-mutado);
+    padding-left: 15px;
+    border-left: 1px dashed rgba(255, 255, 255, 0.2);
+}
+
+/* ========================================================
+   9. VÍDEO DE TREINAMENTO (IFRAME)
+======================================================== */
+iframe {
+    display: block;
+    max-width: 100%; 
+    margin: 0 auto;
+    border: 3px solid var(--cor-dourada);
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+}

@@ -1,0 +1,224 @@
+/* ========================================================
+   1. PÁGINAS DE AUTENTICAÇÃO (LOGIN E CADASTRO)
+======================================================== */
+
+.auth-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 70vh; /* Garante que o card fique bem centralizado na tela */
+    padding: 40px 20px;
+}
+
+.auth-container {
+    background-color: var(--fundo-cards);
+    border: 2px solid var(--cor-dourada);
+    border-radius: 12px;
+    width: 100%;
+    max-width: 450px;
+    padding: 40px 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Cabeçalho do Card */
+.auth-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.auth-header h2 {
+    color: var(--cor-dourada);
+    font-size: 1.8rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+
+.auth-header p {
+    color: var(--cor-texto-mutado);
+    font-size: 0.95rem;
+}
+
+/* Formulário e Inputs */
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.input-group label {
+    color: var(--cor-texto);
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.input-group input {
+    background-color: rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--cor-texto-mutado);
+    color: var(--cor-texto);
+    padding: 12px 15px;
+    border-radius: 6px;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+/* Efeito ao clicar no input */
+.input-group input:focus {
+    border-color: var(--cor-destaque);
+    box-shadow: 0 0 8px rgba(158, 27, 27, 0.4);
+}
+
+/* Botão Principal */
+.btn-principal {
+    background-color: transparent;
+    color: var(--cor-destaque);
+    border: 2px solid var(--cor-destaque);
+    padding: 15px;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.btn-principal:hover {
+    background-color: var(--cor-destaque);
+    color: #fff;
+    box-shadow: 0 0 15px rgba(158, 27, 27, 0.6);
+}
+
+/* Rodapé do Card (Links) */
+.auth-footer {
+    text-align: center;
+    margin-top: 25px;
+    border-top: 1px dashed rgba(255, 255, 255, 0.1);
+    padding-top: 20px;
+}
+
+.auth-footer p {
+    color: var(--cor-texto-mutado);
+    font-size: 0.9rem;
+}
+
+.link-destaque {
+    color: var(--cor-dourada);
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.link-destaque:hover {
+    color: var(--cor-destaque);
+    text-decoration: underline;
+}
+
+/* ========================================================
+   2. ESTILOS DOS EFEITOS JAVASCRIPT (MODAL & TOAST)
+======================================================== */
+
+/* Modal Overlay Transparente */
+.modal-overlay-fazbear {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    backdrop-filter: blur(5px);
+    animation: fadeIn 0.3s ease;
+}
+
+/* Card do Comprovante */
+.modal-card-fazbear {
+    background-color: var(--fundo-cards, #1a1a1a);
+    border: 2px solid var(--cor-dourada, #e6b800);
+    border-radius: 12px;
+    padding: 30px;
+    max-width: 480px;
+    width: 90%;
+    box-shadow: 0 0 25px rgba(230, 184, 0, 0.4);
+    color: var(--cor-texto, #ffffff);
+    text-align: center;
+}
+
+.modal-header-fazbear h3 {
+    color: var(--cor-dourada, #e6b800);
+    margin-bottom: 5px;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+}
+
+.modal-body-fazbear {
+    text-align: left;
+    margin: 20px 0;
+    line-height: 1.6;
+}
+
+.codigo-destaque {
+    background-color: rgba(230, 184, 0, 0.15);
+    border: 1px dashed var(--cor-dourada, #e6b800);
+    padding: 10px;
+    text-align: center;
+    font-size: 1.2rem;
+    border-radius: 6px;
+}
+
+.btn-fechar-modal {
+    background-color: var(--cor-destaque, #9e1b1b);
+    color: #fff;
+    border: none;
+    padding: 12px 25px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+.btn-fechar-modal:hover {
+    background-color: #c02424;
+}
+
+/* Notificação Flutuante (Toast) */
+.toast-fazbear {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #111;
+    color: var(--cor-dourada, #e6b800);
+    border: 2px solid var(--cor-dourada, #e6b800);
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
+    z-index: 10000;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.4s ease;
+    max-width: 350px;
+    font-size: 0.9rem;
+}
+
+.toast-fazbear.visivel {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
